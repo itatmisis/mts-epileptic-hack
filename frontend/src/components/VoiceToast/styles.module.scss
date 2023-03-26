@@ -1,0 +1,18 @@
+.voiceToast {
+  position: absolute;
+  z-index: 1;
+  right: 24px;
+  top: calc(72px + 24px);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-light);
+  padding: 16px;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(0);
+  width: 350px;
+  border-radius: 8px;
+  &.hidden {
+    transform: translateX(calc(100% + 24px));
+  }
+}

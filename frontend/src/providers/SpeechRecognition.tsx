@@ -18,7 +18,7 @@ interface SpeechRecognitionContextType {
 }
 
 export const SpeechRecognitionContext =
-  createContext<SpeechRecognitionContextType | null>(null);
+  createContext<SpeechRecognitionContextType>(null as any);
 
 export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
   const [commandText, setCommandText] = useState("");
