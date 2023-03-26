@@ -33,6 +33,7 @@ const VideoPage = () => {
               className={cl.video}
               width={videoSampleDimensions.videoWidth}
               height={videoSampleDimensions.videoHeight}
+              controls
             >
               <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/2/22/Volcano_Lava_Sample.webm/Volcano_Lava_Sample.webm.360p.webm" />
             </video>
