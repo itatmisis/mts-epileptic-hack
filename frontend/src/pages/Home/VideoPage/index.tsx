@@ -6,7 +6,7 @@ const videoSampleDimensions = {
   videoHeight: 320,
 };
 
-const VideoPlayer = () => {
+const VideoPage = () => {
   return (
     <div className={cl.sampleReactangle}>
       <div className={cl.sampleReactangle__content}>
@@ -33,7 +33,6 @@ const VideoPlayer = () => {
               className={cl.video}
               width={videoSampleDimensions.videoWidth}
               height={videoSampleDimensions.videoHeight}
-              controls
             >
               <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/2/22/Volcano_Lava_Sample.webm/Volcano_Lava_Sample.webm.360p.webm" />
             </video>
@@ -44,4 +43,4 @@ const VideoPlayer = () => {
   );
 };
 
-export default VideoPlayer;
+export default VideoPage;
