@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MtsEpilepticHack.API", "MtsEpilepticHack.API\MtsEpilepticHack.API.csproj", "{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{52DDE409-D9B1-406D-8D44-4C31DCC2177C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{2006DD54-FAFB-4EE1-883C-4DE2B8AC75B7}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CC4F60E4-DE47-40F6-998D-9AD9B1A5663F} = {52DDE409-D9B1-406D-8D44-4C31DCC2177C}
+	EndGlobalSection
+EndGlobal
