@@ -1,0 +1,12 @@
+body {
+  --primary: #e44d42; // red
+  --background-primary: #001424; // dark blue
+  --text-lightest: #fff;
+  --text-light: #eee;
+  --text-medium: #ccc;
+}
+
+body {
+  background-color: var(--background-primary);
+  color: var(--text-light);
+}
