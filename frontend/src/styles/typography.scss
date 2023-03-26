@@ -1,18 +1,24 @@
 @font-face {
   font-family: "MTSSansRegular";
-  src: url("./assets/fonts/MTSSans-Regular__W.woff2");
+  src: url("./assets/fonts/MTSSans-Regular__W.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
   font-family: "MTSSansBold";
-  src: url("./assets/fonts/MTSSans-Bold__W.woff2");
+  src: url("./assets/fonts/MTSSans-Bold__W.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
   font-family: "MTSSansMedium";
-  src: url("./assets/fonts/MTSSans-Medium__W.woff2");
+  src: url("./assets/fonts/MTSSans-Medium__W.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
-  font-family: "MTSSansRegular";
+  font-family: "MTSSansMedium";
 }
 
 h1,

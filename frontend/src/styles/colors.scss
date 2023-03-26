@@ -1,12 +1,13 @@
 body {
   --primary: #e44d42; // red
-  --background-primary: #001424; // dark blue
+  --bg-primary: #191919; // dark blue
+  --bg-secondary: #242424;
   --text-lightest: #fff;
   --text-light: #eee;
   --text-medium: #ccc;
 }
 
 body {
-  background-color: var(--background-primary);
+  background-color: var(--bg-secondary);
   color: var(--text-light);
 }

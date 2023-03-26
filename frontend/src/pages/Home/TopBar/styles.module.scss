@@ -1,0 +1,32 @@
+.nav__wrapper {
+  display: flex;
+  background-color: var(--bg-primary);
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  .nav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    .nav__logo {
+      margin-right: 16px;
+    }
+  }
+  .nav__right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    .right__profile {
+      margin-left: 16px;
+      display: flex;
+      align-items: center;
+      img {
+        color: #fff !important;
+      }
+      .profile__avatar {
+        margin-right: 8px;
+      }
+    }
+  }
+}

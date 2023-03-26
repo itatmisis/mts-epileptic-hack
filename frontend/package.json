@@ -18,7 +18,8 @@
     "react-router-dom": "6.8.0",
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.13.11",
-    "sass": "^1.60.0"
+    "sass": "^1.60.0",
+    "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
     "@types/pubsub-js": "^1.8.3",
