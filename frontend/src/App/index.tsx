@@ -1,8 +1,9 @@
 import Routes from "./Router";
-import Providers from "../providers";
+import Providers from "@/providers";
+import "@/styles/base.scss";
 
-import "../styles/base.scss";
-import { VoiceToast } from "@/components";
+import { lazy } from "react";
+const VoiceToast = lazy(() => import("@/components/VoiceToast"));
 
 function App() {
   return (
