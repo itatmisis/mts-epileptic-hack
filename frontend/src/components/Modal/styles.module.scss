@@ -15,16 +15,35 @@
   &.closing {
     opacity: 0;
   }
+  animation: fade-in 0.15s linear;
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   .modalContent {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-secondary);
     color: var(--text-light);
-    padding: 20px;
-    border: 1px solid var(--text-medium);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 4px;
+    padding: 20px;
     width: 100%;
     max-width: 500px;
     transition: opacity 0.5s;
     opacity: 1;
+    animation: slide-in 0.5s ease-out;
+    @keyframes slide-in {
+      0% {
+        transform: translateY(100%);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
     &.closing {
       opacity: 0;
     }
@@ -35,7 +54,7 @@
       margin-bottom: 20px;
       .modalTitle {
         font-size: 1.5rem;
-        font-weight: 600;
+        font-family: "MTSSansMedium";
       }
       .modalClose {
         cursor: pointer;
@@ -49,6 +68,7 @@
     .modalBody {
       margin-bottom: 20px;
     }
+    // unused
     .modalFooter {
       display: flex;
       justify-content: flex-end;

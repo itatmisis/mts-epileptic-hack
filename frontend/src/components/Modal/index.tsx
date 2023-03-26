@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import cl from "./styles.module.scss";
+import { ReactComponent as Close } from "./assets/close.svg";
 
 interface IModalProps {
   isOpen: boolean;
   onClose?: () => void;
+  title?: string;
   variant?: "default" | "small";
   renderContent: () => JSX.Element;
 }
@@ -12,6 +14,7 @@ const Modal = ({
   isOpen,
   onClose,
   variant = "default",
+  title,
   renderContent,
 }: IModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -36,10 +39,10 @@ const Modal = ({
   }, [isClosing, onClose]);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    document.body.style.overflow = isOpen ? "hidden" : "";
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
     };
   });
 
@@ -53,7 +56,18 @@ const Modal = ({
           onClick={handleModalClick}
           ref={modalRef}
         >
-          <div className={cl.modalContent}>{renderContent()}</div>
+          <div className={cl.modalContent}>
+            <div className={cl.modalHeader}>
+              <p className={cl.modalTitle}>{title}</p>
+              <Close
+                className={cl.modalClose}
+                onClick={() => {
+                  setIsClosing(true);
+                }}
+              />
+            </div>
+            <div className={cl.modalBody}>{renderContent()}</div>
+          </div>
         </div>
       )}
     </>

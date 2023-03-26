@@ -23,11 +23,12 @@
       align-items: center;
       text-transform: capitalize;
       color: var(--text-light);
+      cursor: pointer;
       .profile__avatar {
         margin-right: 8px;
       }
-      .profile__text {
-        cursor: pointer;
+      &:hover {
+        color: var(--text-lightest);
       }
     }
   }
