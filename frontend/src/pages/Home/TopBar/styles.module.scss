@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 72px;
+  padding-inline: 24px;
   .nav {
     display: flex;
     align-items: center;
@@ -17,15 +18,16 @@
     margin-left: auto;
     display: flex;
     align-items: center;
-    .right__profile {
-      margin-left: 16px;
+    .profile {
       display: flex;
       align-items: center;
-      img {
-        color: #fff !important;
-      }
+      text-transform: capitalize;
+      color: var(--text-light);
       .profile__avatar {
         margin-right: 8px;
+      }
+      .profile__text {
+        cursor: pointer;
       }
     }
   }

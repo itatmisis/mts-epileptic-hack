@@ -7,11 +7,10 @@ const TopBar = () => {
     <div className={cl.nav__wrapper}>
       <div className={cl.nav}>
         <LogoFull className={cl.nav__logo} />
-        <h1>TopBar</h1>
         <div className={cl.nav__right}>
-          <div className={cl.right__profile}>
+          <div className={cl.profile}>
             <User className={cl.profile__avatar} />
-            <span>профиль</span>
+            <span className={cl.profile__text}>войти</span>
           </div>
         </div>
       </div>
