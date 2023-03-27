@@ -4,7 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import { SpeechRecognitionContext } from "@/providers/SpeechRecognition";
 
 const RequestVoice = ({ onClose }: { onClose: () => void }) => {
-  const speechRecognitionContext = useContext(SpeechRecognitionContext);
+  const { browserSupportsSpeechRecognition, startListening, listening } =
+    useContext(SpeechRecognitionContext);
+
+  useEffect(() => {
+    if (!browserSupportsSpeechRecognition || listening) onClose();
+  }, []);
 
   return (
     <Modal
@@ -30,7 +35,7 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
               <button
                 className={"btn primary"}
                 onClick={() => {
-                  speechRecognitionContext.startListening();
+                  startListening();
                   onModalClose();
                 }}
               >
