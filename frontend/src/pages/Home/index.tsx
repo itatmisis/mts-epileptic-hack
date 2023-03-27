@@ -7,12 +7,16 @@ import TopBar from "./TopBar";
 const Home = () => {
   return (
     <>
-      <TopBar />
-      <Routes>
-        <Route path="test" element={<VoiceTest />} />
-        <Route path="video" element={<VideoPage />} />
-      </Routes>
-      <Outlet />
+      <header>
+        <TopBar />
+      </header>
+      <main style={{ height: "100%" }}>
+        <Routes>
+          <Route path="test" element={<VoiceTest />} />
+          <Route path="video" element={<VideoPage />} />
+        </Routes>
+        <Outlet />
+      </main>
     </>
   );
 };

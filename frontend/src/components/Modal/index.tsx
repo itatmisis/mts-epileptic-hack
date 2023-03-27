@@ -7,7 +7,7 @@ interface IModalProps {
   onClose?: () => void;
   title?: string;
   variant?: "default" | "small";
-  renderContent: () => JSX.Element;
+  renderContent: (onModalClose: () => void) => JSX.Element;
 }
 
 const Modal = ({
@@ -66,7 +66,9 @@ const Modal = ({
                 }}
               />
             </div>
-            <div className={cl.modalBody}>{renderContent()}</div>
+            <div className={cl.modalBody}>
+              {renderContent(() => setIsClosing(true))}
+            </div>
           </div>
         </div>
       )}

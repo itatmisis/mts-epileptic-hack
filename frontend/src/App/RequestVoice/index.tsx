@@ -11,7 +11,7 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
       onClose={onClose}
       isOpen={true}
       title="Голосовой помощник"
-      renderContent={() => (
+      renderContent={(onModalClose: () => void) => (
         <>
           <div className={cl.requiestVoice}>
             <div className={cl.requiestVoice__text}>
@@ -22,7 +22,7 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
               className={cl.requiestVoice__button}
               onClick={() => {
                 speechRecognitionContext.startListening();
-                onClose();
+                onModalClose();
               }}
             >
               Включить

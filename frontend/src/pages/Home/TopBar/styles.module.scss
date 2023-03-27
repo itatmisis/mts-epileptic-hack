@@ -18,6 +18,24 @@
     margin-left: auto;
     display: flex;
     align-items: center;
+    .voiceStatus {
+      display: flex;
+      transition: color 0.25s ease-out;
+      margin-right: 16px;
+      align-items: center;
+      gap: 8px;
+      .voiceStatus__text {
+        font-family: "MTSSansRegular";
+      }
+      .voiceStatus__icon {
+        width: 32px;
+        height: auto;
+      }
+      &:hover {
+        color: var(--primary);
+        cursor: pointer;
+      }
+    }
     .profile {
       display: flex;
       align-items: center;
@@ -26,9 +44,27 @@
       cursor: pointer;
       .profile__avatar {
         margin-right: 8px;
+        width: 32px;
+        height: auto;
       }
       &:hover {
         color: var(--text-lightest);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nav__wrapper {
+    padding-inline: 16px;
+    .nav__right {
+      .profile {
+        .profile__avatar {
+          margin-right: 0;
+        }
+        .profile__text {
+          display: none;
+        }
       }
     }
   }

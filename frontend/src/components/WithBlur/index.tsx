@@ -24,9 +24,9 @@ const WithBlur: React.FC<WithBlurProps> = ({
   return (
     <div
       style={{
+        width: "100%",
+        height: "100%",
         position: "relative",
-        width: "fit-content",
-        height: "fit-content",
         overflow: "hidden",
       }}
     >
