@@ -38,13 +38,13 @@ const Modal = ({
     }
   }, [isClosing, onClose]);
 
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+  // useEffect(() => {
+  //   document.body.style.overflow = isOpen ? "hidden" : "";
 
-    return () => {
-      document.body.style.overflow = "";
-    };
-  });
+  //   return () => {
+  //     document.body.style.overflow = "";
+  //   };
+  // });
 
   return (
     <>

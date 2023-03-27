@@ -4,8 +4,8 @@ html {
 
 body {
   display: table-cell;
-  overflow-x: hidden !important;
-  max-width: 100%;
+  overflow: hidden !important;
+  max-width: 100vw;
 }
 
 html,

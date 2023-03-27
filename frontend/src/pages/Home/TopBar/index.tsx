@@ -25,6 +25,7 @@ const TopBar = () => {
           <div className={`${cl.voiceStatus} ${listening ? cl.active : ""}`}>
             <WithTooltip
               tooltip={
+                window.navigator.userAgent.includes("Android") ||
                 !browserSupportsSpeechRecognition
                   ? "Голосовое управление не поддерживается"
                   : listening
