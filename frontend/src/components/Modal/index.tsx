@@ -57,15 +57,17 @@ const Modal = ({
           ref={modalRef}
         >
           <div className={cl.modalContent}>
-            <div className={cl.modalHeader}>
-              <p className={cl.modalTitle}>{title}</p>
-              <Close
-                className={cl.modalClose}
-                onClick={() => {
-                  setIsClosing(true);
-                }}
-              />
-            </div>
+            {title && (
+              <div className={cl.modalHeader}>
+                <p className={cl.modalTitle}>{title}</p>
+                <Close
+                  className={cl.modalClose}
+                  onClick={() => {
+                    setIsClosing(true);
+                  }}
+                />
+              </div>
+            )}
             <div className={cl.modalBody}>
               {renderContent(() => setIsClosing(true))}
             </div>

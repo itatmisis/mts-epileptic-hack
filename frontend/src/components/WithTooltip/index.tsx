@@ -22,7 +22,10 @@ const WithTooltip = ({
         height: "100%",
       }}
       data-tooltip={tooltip}
-      onClick={onClick}
+      onClick={(e) => {
+        e.currentTarget.blur();
+        onClick();
+      }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           e.currentTarget.click();

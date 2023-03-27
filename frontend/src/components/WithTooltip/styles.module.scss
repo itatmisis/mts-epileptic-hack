@@ -10,6 +10,7 @@ $tooltip-color: var(--text-medium);
   font-family: "MTSSansRegular";
   // content
   &::after {
+    z-index: 100;
     box-sizing: border-box;
     position: absolute;
     flex-basis: 100%;

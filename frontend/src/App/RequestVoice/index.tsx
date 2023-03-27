@@ -13,20 +13,30 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
       title="Голосовой помощник"
       renderContent={(onModalClose: () => void) => (
         <>
-          <div className={cl.requiestVoice}>
-            <div className={cl.requiestVoice__text}>
-              Для удобства работы с приложением, мы рекомендуем включить
-              голосового помощника.
+          <div className={cl.requestVoice}>
+            <div className={cl.requestVoice__body}>
+              Для удобства работы рекомендуется использовать голосовые команды.
+              Желаете включить?
             </div>
-            <button
-              className={cl.requiestVoice__button}
-              onClick={() => {
-                speechRecognitionContext.startListening();
-                onModalClose();
-              }}
-            >
-              Включить
-            </button>
+            <div className={cl.requestVoice__buttons}>
+              <button
+                className={"btn accent"}
+                onClick={() => {
+                  onModalClose();
+                }}
+              >
+                Нет, спасибо
+              </button>
+              <button
+                className={"btn primary"}
+                onClick={() => {
+                  speechRecognitionContext.startListening();
+                  onModalClose();
+                }}
+              >
+                Да, включить
+              </button>
+            </div>
           </div>
         </>
       )}

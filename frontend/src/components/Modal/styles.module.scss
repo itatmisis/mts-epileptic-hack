@@ -27,17 +27,16 @@
   .modalContent {
     background-color: var(--bg-secondary);
     color: var(--text-light);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
-    padding: 20px;
-    width: 100%;
+    padding: 12px;
     max-width: 500px;
-    transition: opacity 0.5s;
+    transition: opacity 0.2s;
     opacity: 1;
-    animation: slide-in 0.5s ease-out;
+    animation: slide-in 0.5s ease-in-out;
     @keyframes slide-in {
       0% {
-        transform: translateY(100%);
+        transform: translateY(100px);
       }
       100% {
         transform: translateY(0);
@@ -56,29 +55,18 @@
         font-size: 1.5rem;
         font-family: "MTSSansMedium";
       }
-      .modalClose {
-        cursor: pointer;
-        font-size: 1.5rem;
-        font-weight: 600;
-        &:hover {
-          color: var(--primary);
-        }
-      }
     }
     .modalBody {
-      margin-bottom: 20px;
+      width: 100%;
+      height: 100%;
     }
-    // unused
-    .modalFooter {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      .modalButton {
-        margin-left: 10px;
-        &:first-child {
-          margin-left: 0;
-        }
-      }
+  }
+  .modalClose {
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 600;
+    &:hover {
+      color: var(--primary);
     }
   }
 }

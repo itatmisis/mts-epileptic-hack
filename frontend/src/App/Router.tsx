@@ -5,8 +5,8 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/video/*" element={<Home />} />
-        <Route path="/*" element={<Navigate to="/video" />} />
+        <Route path="/home/*" element={<Home />} />
+        <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     </BrowserRouter>
   );

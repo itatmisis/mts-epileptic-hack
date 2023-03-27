@@ -18,9 +18,11 @@ const TopBar = () => {
     <nav className={cl.nav__wrapper}>
       <div className={cl.nav}>
         <LogoFull className={cl.nav__logo} />
-        <a href="#main-content"></a>
+        <a href="#main-content" className={cl.nav__skipLink}>
+          Пропустить навигацию
+        </a>
         <div className={cl.nav__right}>
-          <div className={cl.voiceStatus}>
+          <div className={`${cl.voiceStatus} ${listening ? cl.active : ""}`}>
             <WithTooltip
               tooltip={
                 !browserSupportsSpeechRecognition

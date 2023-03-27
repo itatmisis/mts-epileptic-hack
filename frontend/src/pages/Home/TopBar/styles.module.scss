@@ -13,6 +13,15 @@
     .nav__logo {
       margin-right: 16px;
     }
+    .nav__skipLink {
+      color: var(--primary);
+      z-index: 1;
+      width: 0;
+      overflow: hidden;
+      &:focus {
+        width: auto;
+      }
+    }
   }
   .nav__right {
     margin-left: auto;
@@ -32,8 +41,10 @@
         height: auto;
       }
       &:hover {
-        color: var(--primary);
         cursor: pointer;
+      }
+      &.active {
+        color: var(--primary);
       }
     }
     .profile {
