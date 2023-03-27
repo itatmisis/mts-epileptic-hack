@@ -7,6 +7,7 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import debounce from "../utils/debounce";
 import PubSub from "pubsub-js";
+import { IVoicePlayerCommand } from "./IVoicePlayerCommand";
 
 interface SpeechRecognitionContextType {
   transcript: string;
@@ -47,7 +48,10 @@ export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
   }
 
   function notifyCustomCommands(text: string) {
-    PubSub.publish("voiceCommand", text.split(" "));
+    PubSub.publish("voicePlayerCommand", {
+      command: "pausePlay",
+      words: text.split(" "),
+    } as IVoicePlayerCommand);
     setCommandText("");
   }
 
