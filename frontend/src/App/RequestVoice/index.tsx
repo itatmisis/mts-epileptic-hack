@@ -7,10 +7,11 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
   const { browserSupportsSpeechRecognition, startListening, listening } =
     useContext(SpeechRecognitionContext);
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   useEffect(() => {
     if (
+      isMobile ||
       localStorage.getItem("voiceAccepted") == "true" ||
-      window.navigator.userAgent.includes("Android") ||
       !browserSupportsSpeechRecognition ||
       listening
     ) {
@@ -43,7 +44,7 @@ const RequestVoice = ({ onClose }: { onClose: () => void }) => {
                 className={"btn primary"}
                 onClick={() => {
                   localStorage.setItem("voiceAccepted", "true");
-                  startListening();
+                  startListening(isMobile);
                   onModalClose();
                 }}
               >

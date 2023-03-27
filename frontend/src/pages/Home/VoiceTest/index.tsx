@@ -17,12 +17,12 @@ const VoiceTest = () => {
   }, []);
   return (
     <>
-      <div>Transcript: {speechRecognitionContext?.transcript}</div>
-      <div>Command text: {speechRecognitionContext?.commandText}</div>
-      <button onClick={speechRecognitionContext?.startListening}>
+      <div>Transcript: {speechRecognitionContext.transcript}</div>
+      <div>Command text: {speechRecognitionContext.commandText}</div>
+      <button onClick={() => speechRecognitionContext.startListening}>
         Start listening
       </button>
-      <button onClick={speechRecognitionContext?.stopListening}>
+      <button onClick={speechRecognitionContext.stopListening}>
         Stop listening
       </button>
     </>

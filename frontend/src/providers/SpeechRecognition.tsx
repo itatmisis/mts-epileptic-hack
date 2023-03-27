@@ -13,7 +13,7 @@ interface SpeechRecognitionContextType {
   commandText: string;
   listening: boolean;
   browserSupportsSpeechRecognition: boolean;
-  startListening: () => void;
+  startListening: (isOnce?: boolean) => void;
   stopListening: () => void;
 }
 
@@ -51,8 +51,11 @@ export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
     setCommandText("");
   }
 
-  const startListening = () => {
-    SpeechRecognition.startListening({ language: "ru-RU", continuous: true });
+  const startListening = (isOnce = false) => {
+    SpeechRecognition.startListening({
+      language: "ru-RU",
+      continuous: !isOnce,
+    });
   };
 
   const stopListening = () => {

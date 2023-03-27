@@ -13,6 +13,7 @@ const TopBar = () => {
     stopListening,
     browserSupportsSpeechRecognition,
   } = useContext(SpeechRecognitionContext);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   return (
     <nav className={cl.nav__wrapper}>
@@ -25,7 +26,6 @@ const TopBar = () => {
           <div className={`${cl.voiceStatus} ${listening ? cl.active : ""}`}>
             <WithTooltip
               tooltip={
-                window.navigator.userAgent.includes("Android") ||
                 !browserSupportsSpeechRecognition
                   ? "Голосовое управление не поддерживается"
                   : listening
@@ -33,8 +33,13 @@ const TopBar = () => {
                   : "Голосовое управление выключено"
               }
               onClick={() => {
-                console.log("test");
-                listening ? stopListening() : startListening();
+                if (isMobile) {
+                  navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: false,
+                  });
+                }
+                listening ? stopListening() : startListening(isMobile);
               }}
             >
               <VoiceIcon className={cl.voiceStatus__icon} />
