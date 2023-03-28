@@ -31,26 +31,6 @@ def get_digits(str1):
     return c
 
 
-def get_response(text: str) -> list:
-    response = []
-    digits = get_digits(text)
-    label = classifier(text)[0]['label']
-    response.append(label)
-    response.append(digits)
-    if label != 'pause/play':
-        count_to = text.find('до')
-        count_forward = text.find('на')
-        if count_forward == -1 and count_to == -1:
-            response.append('максимум или минимум или константное значение')
-        elif count_forward >= count_to:
-            response.append('на')
-        else:
-            response.append('до')
-    else:
-        response.append('None')
-
-    return response
-
 
 class Adapter:
     def __init__(self):
@@ -60,14 +40,14 @@ class Adapter:
 
     def load_config(self):
         config = RobertaConfig.from_pretrained(
-            'models/adapters/adapter_v4/config.json',
+            'models/adapters/adapter_v4/config.json', #Напиши тут путь
             num_labels=2,
         )
         return config
 
     def load_model(self):
         model = RobertaModelWithHeads.from_pretrained(
-            'models/adapters/adapter_v4/pytorch_model.bin',
+            'models/adapters/adapter_v4/pytorch_model.bin', #Напиши тут путь!!!
             config=Adapter.load_config(self)
         )
         model.set_active_adapters("docs")
