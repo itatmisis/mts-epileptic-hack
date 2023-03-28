@@ -3,6 +3,7 @@ import { Modal } from "@/components";
 import VoiceTest from "./VoiceTest";
 import TopBar from "./TopBar";
 import VideoPage from "./VideoPage";
+import BottomMobileNav from "./BottomMobileNav";
 
 const Home = () => {
   return (
@@ -20,6 +21,9 @@ const Home = () => {
         </Routes>
         <Outlet />
       </main>
+      <footer>
+        <BottomMobileNav />
+      </footer>
     </>
   );
 };
