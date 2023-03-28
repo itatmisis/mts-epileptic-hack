@@ -44,8 +44,7 @@ class Adapter:
     def __init__(self):
         self.prepare_model()
         self.classifier = TextClassificationPipeline(model=Adapter.load_model(self),
-                                                     tokenizer=Adapter.load_tokenizer(self),
-                                                     device=training_args.device.index)
+                                                     tokenizer=Adapter.load_tokenizer(self))
 
     def load_config(self):
         config = RobertaConfig.from_pretrained(
