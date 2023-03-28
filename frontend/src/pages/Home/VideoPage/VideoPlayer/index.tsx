@@ -12,14 +12,17 @@ import { ReactComponent as VolumeMuteIcon } from "./assets/volume_mute.svg";
 import { ReactComponent as VolumeLowIcon } from "./assets/volume_low.svg";
 import { ReactComponent as VolumeHighIcon } from "./assets/volume_high.svg";
 
-import { WithBlur } from "@/components";
+import { Slider, WithBlur } from "@/components";
+import AccessibilityPopup from "./AccessibilityPopup";
 
 interface VideoPlayerProps {
   source: string;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
-  const [duration, setDuration] = useState("");
+  const [isAccessibilityPopupOpen, setIsAccessibilityPopupOpen] =
+    useState(true);
+  const [duration, setDuration] = useState("0:00 / 0:00");
   const [videoHeight, setVideoHeight] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const [videoWidth, setVideoWidth] = useState(0);
@@ -228,6 +231,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       className={cl.videoWrapper}
       onDoubleClick={handleFullscreen}
     >
+      {isAccessibilityPopupOpen && (
+        <AccessibilityPopup
+          onClose={() => setIsAccessibilityPopupOpen(false)}
+        />
+      )}
       <div className={cl.overlay} onClick={(e) => e.preventDefault()}>
         <div className={cl.timelineContainer}>
           <div className={cl.timeline} ref={timeline}>
@@ -277,14 +285,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
                   <VolumeHighIcon />
                 )}
               </button>
-              <input
-                className={cl.volumeSlider}
-                style={
-                  {
-                    "--volume-position": `${volume}`,
-                  } as CSSProperties
-                }
-                type="range"
+              <Slider
                 min="0"
                 max="1"
                 step="0.01"

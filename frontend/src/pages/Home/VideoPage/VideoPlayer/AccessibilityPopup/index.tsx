@@ -1,7 +1,15 @@
-import React from "react";
+import cl from "./styles.module.scss";
 
-const AccessibilityPopup = () => {
-  return <div>AccessibilityPopup</div>;
+interface AccessibilityPopupProps {
+  onClose: () => void;
+}
+
+const AccessibilityPopup = ({  onClose }: AccessibilityPopupProps) => {
+  return (
+    <div className={cl.accessibilityPopup}>
+      <h1></h1> AccessibilityPopup
+    </div>
+  );
 };
 
 export default AccessibilityPopup;

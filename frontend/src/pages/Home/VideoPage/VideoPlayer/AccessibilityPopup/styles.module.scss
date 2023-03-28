@@ -1,0 +1,10 @@
+.accessibilityPopup {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
