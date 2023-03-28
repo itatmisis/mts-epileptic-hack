@@ -168,6 +168,7 @@
           -webkit-appearance: none;
           margin: 10px 0;
           width: 100%;
+          min-width: 10px;
           position: relative;
 
           &:focus {
@@ -265,16 +266,27 @@
           }
         }
 
-        width: 140px;
-        &:hover {
+        &:hover,
+        &:focus {
+          width: 140px;
         }
       }
     }
   }
-  .overlay {
-    opacity: 1;
-  }
   &:hover,
   &:focus-within {
+    .overlay {
+      opacity: 1;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .player {
+    .playbackControls {
+      .volumeContainer {
+        display: none !important;
+      }
+    }
   }
 }

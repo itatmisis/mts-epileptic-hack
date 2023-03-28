@@ -12,7 +12,7 @@ import { ReactComponent as VolumeMuteIcon } from "./assets/volume_mute.svg";
 import { ReactComponent as VolumeLowIcon } from "./assets/volume_low.svg";
 import { ReactComponent as VolumeHighIcon } from "./assets/volume_high.svg";
 
-import { WithBlur, WithTooltip } from "@/components";
+import { WithBlur } from "@/components";
 
 interface VideoPlayerProps {
   source: string;
@@ -262,11 +262,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             >
               <Forward10Icon />
             </button>
-            <div className={cl.volumeContainer}>
+            <div className={cl.volumeContainer} tabIndex={0}>
               <button
                 className={cl.volumeButton}
                 onClick={() => {
-                  setVolume(volume === 0 ? 1 : 0);
+                  setVolume(volume === 0 ? 0.5 : 0);
                 }}
               >
                 {volume === 0 ? (
