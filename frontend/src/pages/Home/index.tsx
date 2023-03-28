@@ -1,7 +1,6 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 import { Modal } from "@/components";
 import VoiceTest from "./VoiceTest";
-import OldVideoPage from "./OldVideoPage";
 import TopBar from "./TopBar";
 import VideoPage from "./VideoPage";
 
@@ -18,7 +17,6 @@ const Home = () => {
         <Routes>
           <Route index element={<VideoPage />} />
           <Route path="test" element={<VoiceTest />} />
-          <Route path="video" element={<OldVideoPage />} />
         </Routes>
         <Outlet />
       </main>
