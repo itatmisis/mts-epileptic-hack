@@ -5,13 +5,16 @@ import { IVoicePlayerCommand } from "@/providers/IVoicePlayerCommand";
 import testVideo from "./testVideo.mp4";
 import { ReactComponent as PlayIcon } from "./assets/play.svg";
 import { ReactComponent as PauseIcon } from "./assets/pause.svg";
+import { WithBlur } from "@/components";
 
 interface VideoPlayerProps {
   source: string;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
-  const [timelineStyle, setTimelineStyle] = useState<React.CSSProperties>({});
+  const [duration, setDuration] = useState("");
+  const [videoHeight, setVideoHeight] = useState(0);
+  const [videoWidth, setVideoWidth] = useState(0);
   const player = useRef<HTMLVideoElement>(null);
   const timeline = useRef<HTMLDivElement>(null);
   const fullscreenObject = useRef<HTMLDivElement>(null);
@@ -96,10 +99,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.currentTime =
       clickPositionInPercent * player.current!.duration;
     const progress = player.current!.currentTime / player.current!.duration;
-    setTimelineStyle((prev) => ({
-      ...prev,
-      "--progress-position": progress,
-    }));
     timeline.current?.style.setProperty(
       "--progress-position",
       progress.toString()
@@ -108,19 +107,34 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
 
   const handleTimeUpdate = (e: any) => {
     const progress = player.current!.currentTime / player.current!.duration;
-    setTimelineStyle((prev) => ({
-      ...prev,
-      "--progress-position": progress,
-    }));
     timeline.current?.style.setProperty(
       "--progress-position",
       progress.toString()
+    );
+
+    // format to mm:ss/total
+    const currentTime = player.current!.currentTime;
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = Math.floor(currentTime - minutes * 60);
+    const totalMinutes = Math.floor(player.current!.duration / 60);
+    const totalSeconds = Math.floor(
+      player.current!.duration - totalMinutes * 60
+    );
+    setDuration(
+      `${minutes}:${seconds < 10 ? "0" + seconds : seconds}/${totalMinutes}:${
+        totalSeconds < 10 ? "0" + totalSeconds : totalSeconds
+      }`
     );
   };
 
   useEffect(() => {
     player.current!.addEventListener("timeupdate", handleTimeUpdate);
+    player.current!.addEventListener("loadedmetadata", () => {
+      setVideoHeight(player.current!.videoHeight);
+      setVideoWidth(player.current!.videoWidth);
+    });
 
+    timeline.current!.addEventListener("mousemove", handlePreviewPosition);
     timeline.current!.addEventListener("mousedown", handleScrubbing);
     document.addEventListener("mouseup", (e) => {
       if (isScrubbing) handleScrubbing(e);
@@ -128,7 +142,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     document.addEventListener("mousemove", (e) => {
       if (isScrubbing) handleTimelineUpdate(e);
     });
-    timeline.current!.addEventListener("mousemove", handlePreviewPosition);
 
     return () => {
       player.current!.removeEventListener("timeupdate", handleTimeUpdate);
@@ -144,21 +157,42 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           </div>
         </div>
         <div className={cl.playbackControls}>
-          <button
-            className={`${cl.playbackButton} ${cl.play}`}
-            onClick={handlePausePlay}
-          >
-            {player.current?.paused ? (
-              <PlayIcon className={cl.playIcon} />
-            ) : (
-              <PauseIcon className={cl.playIcon} />
-            )}
-          </button>
+          <div className={cl.left}>
+            <button
+              className={`${cl.playbackButton} ${cl.play}`}
+              onClick={handlePausePlay}
+            >
+              {player.current?.paused ? (
+                <PlayIcon style={{ marginLeft: 2 }} />
+              ) : (
+                <PauseIcon />
+              )}
+            </button>
+            <div className={cl.durationContainer}>
+              <span className={cl.duration}>{duration}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <video className={cl.video} ref={player} loop autoPlay muted>
-        <source src={testVideo} />
-      </video>
+      <div className={cl.playerContainer}>
+        <WithBlur
+          blurRegions={[
+            {
+              x: 0,
+              y: 0,
+              width: 100,
+              height: 100,
+            },
+          ]}
+          // get original width and height of the video
+          originalHeight={videoHeight}
+          originalWidth={videoWidth}
+        >
+          <video className={cl.player} ref={player} loop autoPlay muted>
+            <source src={testVideo} />
+          </video>
+        </WithBlur>
+      </div>
     </div>
   );
 };
