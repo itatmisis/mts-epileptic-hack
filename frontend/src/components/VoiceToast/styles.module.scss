@@ -1,13 +1,14 @@
 .voiceToast {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   right: 24px;
-  top: calc(72px + 24px);
+  top: calc(72px + 20px);
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-medium);
-  padding: 16px;
+  padding-inline: 16px;
   transition: transform 0.3s ease-in-out, color 0.3s ease-in;
   transform: translateX(0);
 
@@ -35,5 +36,23 @@
   }
   &.closing {
     color: var(--text-lightest);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  // slide from top
+  .voiceToast {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    bottom: auto;
+    transform: translateY(0);
+    &.hidden {
+      transform: translateY(-200%) !important;
+    }
+    &.closing {
+      transform: translateY(0);
+    }
   }
 }

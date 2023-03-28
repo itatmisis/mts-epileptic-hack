@@ -1,7 +1,7 @@
 // the script raises pubsub "voiceCommand" event on voice command after the word "плеер" is recognized
 // publishes an array of keyword words (for example: ["перейти", "в", "сериалы"])
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -65,6 +65,10 @@ export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
   const stopListening = () => {
     SpeechRecognition.stopListening();
   };
+
+  useEffect(() => {
+    console.log(transcript);
+  }, [transcript]);
 
   return (
     <SpeechRecognitionContext.Provider

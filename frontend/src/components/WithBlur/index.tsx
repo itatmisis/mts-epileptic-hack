@@ -44,7 +44,7 @@ const WithBlur: React.FC<WithBlurProps> = ({
             left: `${(region.x / originalWidth) * 100}%`,
             width: `${(region.width / originalWidth) * 100}%`,
             height: `${(region.height / originalHeight) * 100}%`,
-            zIndex: 100,
+            zIndex: 1,
             pointerEvents: "none",
             // background: "red",
             filter: "blur(20px)",

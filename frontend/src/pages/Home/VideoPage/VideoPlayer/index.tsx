@@ -238,10 +238,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           isFullscreen={isFullscreen}
           blurRegions={[
             {
-              x: 0,
-              y: 0,
-              width: 100,
-              height: 100,
+              x: 500,
+              y: 250,
+              width: 200,
+              height: 200,
             },
           ]}
           // get original width and height of the video
