@@ -11,9 +11,10 @@ import { ReactComponent as Backward10Icon } from "./assets/backward10.svg";
 import { ReactComponent as VolumeMuteIcon } from "./assets/volume_mute.svg";
 import { ReactComponent as VolumeLowIcon } from "./assets/volume_low.svg";
 import { ReactComponent as VolumeHighIcon } from "./assets/volume_high.svg";
+import { ReactComponent as AccessibilityIcon } from "./assets/accessibility.svg";
 
-import { Slider, WithBlur } from "@/components";
-import AccessibilityPopup from "./AccessibilityPopup";
+import { Modal, Slider, WithBlur } from "@/components";
+import AccessibilityControls from "./AccessibilityControls";
 
 interface VideoPlayerProps {
   source: string;
@@ -31,6 +32,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const fullscreenObject = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [volume, setVolume] = useState(1);
+
+  const [contrast, setContrast] = useState(1);
+  const [saturation, setSaturation] = useState(1);
+  const [brightness, setBrightness] = useState(1);
 
   // player
   const handleFullscreen = () => {
@@ -236,12 +241,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       className={cl.videoWrapper}
       onDoubleClick={handleFullscreen}
     >
-      {isAccessibilityPopupOpen && (
-        <AccessibilityPopup
-          videoRef={player}
-          onClose={() => setIsAccessibilityPopupOpen(false)}
-        />
-      )}
       <div className={cl.overlay} onClick={(e) => e.preventDefault()}>
         <div className={cl.timelineContainer}>
           <div className={cl.timeline} ref={timeline}>
@@ -306,6 +305,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             </div>
           </div>
           <div className={cl.right}>
+            <button
+              className={cl.playbackButton}
+              onClick={(e) => {
+                e.stopPropagation(),
+                  setIsAccessibilityPopupOpen((prev) => !prev);
+              }}
+            >
+              <AccessibilityIcon />
+            </button>
             <button className={cl.playbackButton} onClick={handleFullscreen}>
               <FullscreenIcon />
             </button>
@@ -333,10 +341,49 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           originalHeight={videoHeight}
           originalWidth={videoWidth}
         >
-          <video className={cl.player} ref={player} loop autoPlay>
+          <video
+            style={{
+              filter: `contrast(${contrast}) saturate(${saturation}) brightness(${brightness})`,
+            }}
+            className={cl.player}
+            ref={player}
+            loop
+            autoPlay
+          >
             <source src={testVideo} />
           </video>
         </WithBlur>
+      </div>
+      {isAccessibilityPopupOpen && (
+        <div className={cl.accessibilityControlsDesktop}>
+          <AccessibilityControls
+            onClose={() => setIsAccessibilityPopupOpen(false)}
+            saturation={saturation}
+            contrast={contrast}
+            brightness={brightness}
+            setSaturation={setSaturation}
+            setContrast={setContrast}
+            setBrightness={setBrightness}
+          />
+        </div>
+      )}
+      <div className={cl.accessibilityControlsMobile}>
+        <Modal
+          isOpen={isAccessibilityPopupOpen}
+          onClose={() => setIsAccessibilityPopupOpen(false)}
+          title="Доступность"
+          renderContent={(onClose) => (
+            <AccessibilityControls
+              onClose={onClose}
+              saturation={saturation}
+              contrast={contrast}
+              brightness={brightness}
+              setSaturation={setSaturation}
+              setContrast={setContrast}
+              setBrightness={setBrightness}
+            />
+          )}
+        />
       </div>
     </div>
   );

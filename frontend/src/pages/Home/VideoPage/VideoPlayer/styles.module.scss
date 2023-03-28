@@ -1,12 +1,15 @@
 .videoWrapper {
   width: 100%;
   position: relative;
+  background: black;
   .playerContainer {
     background: black;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: auto;
     aspect-ratio: 16 / 10;
+    max-height: 80vh;
     .player {
       pointer-events: none;
       object-fit: contain;
@@ -19,6 +22,7 @@
     .playerContainer {
       width: 100vw;
       height: 100vh;
+      max-height: none;
       .player {
         max-height: none;
         height: 100vh;
@@ -180,6 +184,31 @@
   &:focus-within {
     .overlay {
       opacity: 1;
+    }
+  }
+  .accessibilityControlsDesktop {
+    z-index: 3;
+    position: absolute;
+    bottom: 50px;
+    right: 10px;
+    width: 300px;
+  }
+  .accessibilityControlsMobile {
+    display: none;
+  }
+  @media screen and (max-width: 600px) {
+    position: fixed;
+    right: 12px;
+    width: calc(100% - 24px);
+    .playerContainer {
+      position: relative;
+      z-index: 10000;
+    }
+    .accessibilityControlsDesktop {
+      display: none !important;
+    }
+    .accessibilityControlsMobile {
+      display: block;
     }
   }
 }

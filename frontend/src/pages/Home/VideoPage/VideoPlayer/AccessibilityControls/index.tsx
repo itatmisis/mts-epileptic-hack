@@ -4,25 +4,31 @@ import cl from "./styles.module.scss";
 
 interface AccessibilityPopupProps {
   onClose: () => void;
-  videoRef: React.RefObject<HTMLVideoElement>;
+  contrast: number;
+  saturation: number;
+  brightness: number;
+  setContrast: (value: number) => void;
+  setSaturation: (value: number) => void;
+  setBrightness: (value: number) => void;
 }
 
-const AccessibilityPopup = ({ onClose, videoRef }: AccessibilityPopupProps) => {
+const AccessibilityControls = ({
+  onClose,
+  contrast,
+  saturation,
+  brightness,
+  setContrast,
+  setSaturation,
+  setBrightness,
+}: AccessibilityPopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
-  const [contrast, setContrast] = useState(1);
-  const [saturation, setSaturation] = useState(1);
-  const [brightness, setBrightness] = useState(1);
-
-  useEffect(() => {
-    videoRef.current!.style.filter = `contrast(${contrast}) saturate(${saturation}) brightness(${brightness})`;
-  }, [contrast, saturation, brightness]);
 
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
       if (e.target == popupRef.current) {
         return;
       }
-      // onClose();
+      onClose();
     });
 
     return () => {
@@ -30,14 +36,14 @@ const AccessibilityPopup = ({ onClose, videoRef }: AccessibilityPopupProps) => {
         if (e.target == popupRef.current) {
           return;
         }
-        // onClose();
+        onClose();
       });
     };
   }, [onClose]);
 
   return (
     <div
-      className={cl.accessibilityPopup}
+      className={cl.accessibilityControls}
       ref={popupRef}
       onClick={(e) => e.stopPropagation()}
     >
@@ -78,4 +84,4 @@ const AccessibilityPopup = ({ onClose, videoRef }: AccessibilityPopupProps) => {
   );
 };
 
-export default AccessibilityPopup;
+export default AccessibilityControls;
