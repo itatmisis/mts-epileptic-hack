@@ -193,23 +193,22 @@
     right: 10px;
     width: 300px;
   }
-  .accessibilityControlsMobile {
-    display: none;
-  }
-  @media screen and (max-width: 600px) {
+}
+.accessibilityControlsMobile {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .videoWrapper {
     position: fixed;
     right: 12px;
     width: calc(100% - 24px);
-    .playerContainer {
-      position: relative;
-      z-index: 10000;
-    }
+    z-index: 10000;
     .accessibilityControlsDesktop {
       display: none !important;
     }
-    .accessibilityControlsMobile {
-      display: block;
-    }
+  }
+  .accessibilityControlsMobile {
+    display: block;
   }
 }
 

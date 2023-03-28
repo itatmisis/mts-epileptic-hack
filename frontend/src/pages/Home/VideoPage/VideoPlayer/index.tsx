@@ -236,137 +236,139 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   }, []);
 
   return (
-    <div
-      ref={fullscreenObject}
-      className={cl.videoWrapper}
-      onDoubleClick={handleFullscreen}
-    >
-      <div className={cl.overlay} onClick={(e) => e.preventDefault()}>
-        <div className={cl.timelineContainer}>
-          <div className={cl.timeline} ref={timeline}>
-            <div className={cl.thumbIndicator}></div>
+    <>
+      <div
+        ref={fullscreenObject}
+        className={cl.videoWrapper}
+        onDoubleClick={handleFullscreen}
+      >
+        <div className={cl.overlay} onClick={(e) => e.preventDefault()}>
+          <div className={cl.timelineContainer}>
+            <div className={cl.timeline} ref={timeline}>
+              <div className={cl.thumbIndicator}></div>
+            </div>
           </div>
-        </div>
-        <div className={cl.playbackControls}>
-          <div className={cl.left}>
-            <button
-              className={`${cl.playbackButton} ${cl.play}`}
-              onClick={handlePausePlay}
-            >
-              {player.current?.paused ? (
-                <PlayIcon style={{ marginLeft: 2 }} />
-              ) : (
-                <PauseIcon />
-              )}
-            </button>
-            <button
-              className={cl.playbackButton}
-              onClick={() => {
-                appendTime(-10);
-              }}
-            >
-              <Backward10Icon />
-            </button>
-            <button
-              className={cl.playbackButton}
-              onClick={() => {
-                appendTime(10);
-              }}
-            >
-              <Forward10Icon />
-            </button>
-            <div className={cl.volumeContainer} tabIndex={0}>
+          <div className={cl.playbackControls}>
+            <div className={cl.left}>
               <button
-                className={cl.volumeButton}
-                onClick={() => {
-                  setVolume(volume === 0 ? 0.5 : 0);
-                }}
+                className={`${cl.playbackButton} ${cl.play}`}
+                onClick={handlePausePlay}
               >
-                {volume === 0 ? (
-                  <VolumeMuteIcon />
-                ) : volume < 0.5 ? (
-                  <VolumeLowIcon />
+                {player.current?.paused ? (
+                  <PlayIcon style={{ marginLeft: 2 }} />
                 ) : (
-                  <VolumeHighIcon />
+                  <PauseIcon />
                 )}
               </button>
-              <Slider
-                min="0"
-                max="1"
-                step="0.01"
-                value={volume}
-                onChange={(e) => {
-                  setVolume(parseFloat(e.target.value));
+              <button
+                className={cl.playbackButton}
+                onClick={() => {
+                  appendTime(-10);
                 }}
-              />
+              >
+                <Backward10Icon />
+              </button>
+              <button
+                className={cl.playbackButton}
+                onClick={() => {
+                  appendTime(10);
+                }}
+              >
+                <Forward10Icon />
+              </button>
+              <div className={cl.volumeContainer} tabIndex={0}>
+                <button
+                  className={cl.volumeButton}
+                  onClick={() => {
+                    setVolume(volume === 0 ? 0.5 : 0);
+                  }}
+                >
+                  {volume === 0 ? (
+                    <VolumeMuteIcon />
+                  ) : volume < 0.5 ? (
+                    <VolumeLowIcon />
+                  ) : (
+                    <VolumeHighIcon />
+                  )}
+                </button>
+                <Slider
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={(e) => {
+                    setVolume(parseFloat(e.target.value));
+                  }}
+                />
+              </div>
+              <div className={cl.durationContainer}>
+                <span className={cl.duration}>{duration}</span>
+              </div>
             </div>
-            <div className={cl.durationContainer}>
-              <span className={cl.duration}>{duration}</span>
+            <div className={cl.right}>
+              <button
+                className={cl.playbackButton}
+                onClick={(e) => {
+                  e.stopPropagation(),
+                    setIsAccessibilityPopupOpen((prev) => !prev);
+                }}
+              >
+                <AccessibilityIcon />
+              </button>
+              <button className={cl.playbackButton} onClick={handleFullscreen}>
+                <FullscreenIcon />
+              </button>
             </div>
-          </div>
-          <div className={cl.right}>
-            <button
-              className={cl.playbackButton}
-              onClick={(e) => {
-                e.stopPropagation(),
-                  setIsAccessibilityPopupOpen((prev) => !prev);
-              }}
-            >
-              <AccessibilityIcon />
-            </button>
-            <button className={cl.playbackButton} onClick={handleFullscreen}>
-              <FullscreenIcon />
-            </button>
           </div>
         </div>
-      </div>
-      <div className={cl.playerContainer} onClick={handlePausePlay}>
-        <WithBlur
-          isFullscreen={isFullscreen}
-          blurRegions={[
-            {
-              x: 500,
-              y: 250,
-              width: 200,
-              height: 200,
-            },
-            {
-              x: 900,
-              y: 150,
-              width: 300,
-              height: 400,
-            },
-          ]}
-          // get original width and height of the video
-          originalHeight={videoHeight}
-          originalWidth={videoWidth}
-        >
-          <video
-            style={{
-              filter: `contrast(${contrast}) saturate(${saturation}) brightness(${brightness})`,
-            }}
-            className={cl.player}
-            ref={player}
-            loop
-            autoPlay
+        <div className={cl.playerContainer} onClick={handlePausePlay}>
+          <WithBlur
+            isFullscreen={isFullscreen}
+            blurRegions={[
+              {
+                x: 500,
+                y: 250,
+                width: 200,
+                height: 200,
+              },
+              {
+                x: 900,
+                y: 150,
+                width: 300,
+                height: 400,
+              },
+            ]}
+            // get original width and height of the video
+            originalHeight={videoHeight}
+            originalWidth={videoWidth}
           >
-            <source src={testVideo} />
-          </video>
-        </WithBlur>
-      </div>
-      {isAccessibilityPopupOpen && (
-        <div className={cl.accessibilityControlsDesktop}>
-          <AccessibilityControls
-            onClose={() => setIsAccessibilityPopupOpen(false)}
-            saturation={saturation}
-            contrast={contrast}
-            brightness={brightness}
-            setSaturation={setSaturation}
-            setContrast={setContrast}
-            setBrightness={setBrightness}
-          />
+            <video
+              style={{
+                filter: `contrast(${contrast}) saturate(${saturation}) brightness(${brightness})`,
+              }}
+              className={cl.player}
+              ref={player}
+              loop
+              autoPlay
+            >
+              <source src={testVideo} />
+            </video>
+          </WithBlur>
         </div>
-      )}
+        {isAccessibilityPopupOpen && (
+          <div className={cl.accessibilityControlsDesktop}>
+            <AccessibilityControls
+              onClose={() => setIsAccessibilityPopupOpen(false)}
+              saturation={saturation}
+              contrast={contrast}
+              brightness={brightness}
+              setSaturation={setSaturation}
+              setContrast={setContrast}
+              setBrightness={setBrightness}
+            />
+          </div>
+        )}
+      </div>
       <div className={cl.accessibilityControlsMobile}>
         <Modal
           isOpen={isAccessibilityPopupOpen}
@@ -385,7 +387,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           )}
         />
       </div>
-    </div>
+    </>
   );
 };
 
