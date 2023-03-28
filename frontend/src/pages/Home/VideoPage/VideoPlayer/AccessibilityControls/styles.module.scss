@@ -9,18 +9,47 @@
   gap: 12px;
   .option {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    .option__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
     .option__title,
     .option__value {
       user-select: none;
     }
     .option__title {
-      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      p {
+        margin-bottom: 6px;
+      }
+    }
+    .option__reset {
+      padding: 0;
+      background: transparent;
+      color: var(--text-light);
+      border: none;
+      width: 24px;
+      height: 24px;
+      svg {
+        width: 20px;
+        height: auto;
+      }
+      &:hover {
+        cursor: pointer;
+        color: var(--primary);
+      }
     }
     .option__value {
       font-size: 14px;
       font-family: "MTSSansRegular";
       color: var(--text-medium);
+      margin-bottom: 5px;
     }
   }
   @media screen and (max-width: 600px) {

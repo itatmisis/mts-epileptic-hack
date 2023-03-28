@@ -1,6 +1,7 @@
 import { Slider } from "@/components";
 import { useEffect, useRef, useState } from "react";
 import cl from "./styles.module.scss";
+import { ReactComponent as ResetIcon } from "./assets/reset.svg";
 
 interface AccessibilityPopupProps {
   onClose: () => void;
@@ -48,37 +49,64 @@ const AccessibilityControls = ({
       onClick={(e) => e.stopPropagation()}
     >
       <div className={cl.option}>
-        <div className={cl.option__title}>Контрастность</div>
-        <Slider
-          min="0"
-          max="2"
-          step="0.01"
-          value={contrast}
-          onChange={(e) => setContrast(+e.target.value)}
-        />
-        <div className={cl.option__value}>{Math.round(contrast * 100)}%</div>
+        <div className={cl.option__body}>
+          <div className={cl.option__title}>
+            <p>Контрастность</p>
+            <div className={cl.option__value}>
+              {Math.round(contrast * 100)}%
+            </div>
+          </div>
+          <Slider
+            min="0"
+            max="2"
+            step="0.01"
+            value={contrast}
+            onChange={(e) => setContrast(+e.target.value)}
+          />
+        </div>
+        <button className={cl.option__reset} onClick={() => setContrast(1)}>
+          <ResetIcon />
+        </button>
       </div>
       <div className={cl.option}>
-        <div className={cl.option__title}>Насыщенность</div>
-        <Slider
-          min="0"
-          max="2"
-          step="0.01"
-          value={saturation}
-          onChange={(e) => setSaturation(+e.target.value)}
-        />
-        <div className={cl.option__value}>{Math.round(saturation * 100)}%</div>
+        <div className={cl.option__body}>
+          <div className={cl.option__title}>
+            <p>Насыщенность</p>
+            <div className={cl.option__value}>
+              {Math.round(saturation * 100)}%
+            </div>
+          </div>
+          <Slider
+            min="0"
+            max="2"
+            step="0.01"
+            value={saturation}
+            onChange={(e) => setSaturation(+e.target.value)}
+          />
+        </div>
+        <button className={cl.option__reset} onClick={() => setSaturation(1)}>
+          <ResetIcon />
+        </button>
       </div>
       <div className={cl.option}>
-        <div className={cl.option__title}>Яркость</div>
-        <Slider
-          min="0"
-          max="2"
-          step="0.01"
-          value={brightness}
-          onChange={(e) => setBrightness(+e.target.value)}
-        />
-        <div className={cl.option__value}>{Math.round(brightness * 100)}%</div>
+        <div className={cl.option__body}>
+          <div className={cl.option__title}>
+            <p>Яркость</p>
+            <div className={cl.option__value}>
+              {Math.round(brightness * 100)}%
+            </div>
+          </div>
+          <Slider
+            min="0"
+            max="2"
+            step="0.01"
+            value={brightness}
+            onChange={(e) => setBrightness(+e.target.value)}
+          />
+        </div>
+        <button className={cl.option__reset} onClick={() => setBrightness(1)}>
+          <ResetIcon />
+        </button>
       </div>
     </div>
   );
