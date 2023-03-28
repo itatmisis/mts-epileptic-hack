@@ -14,14 +14,12 @@ interface WithBlurProps {
   children: React.ReactNode;
 }
 
-// should place divs with blur regions on top of the video, use % for positioning, dont use canvas
 const WithBlur: React.FC<WithBlurProps> = ({
   blurRegions,
   originalWidth,
   originalHeight,
   children,
 }) => {
-  console.log(blurRegions, originalWidth, originalHeight);
   return (
     <div
       style={{

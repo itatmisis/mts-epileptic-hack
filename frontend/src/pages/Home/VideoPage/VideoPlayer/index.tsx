@@ -5,6 +5,7 @@ import { IVoicePlayerCommand } from "@/providers/IVoicePlayerCommand";
 import testVideo from "./testVideo.mp4";
 import { ReactComponent as PlayIcon } from "./assets/play.svg";
 import { ReactComponent as PauseIcon } from "./assets/pause.svg";
+import { ReactComponent as FullscreenIcon } from "./assets/fullscreen.svg";
 import { WithBlur } from "@/components";
 
 interface VideoPlayerProps {
@@ -14,6 +15,7 @@ interface VideoPlayerProps {
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [duration, setDuration] = useState("");
   const [videoHeight, setVideoHeight] = useState(0);
+  const [isPaused, setIsPaused] = useState(true);
   const [videoWidth, setVideoWidth] = useState(0);
   const player = useRef<HTMLVideoElement>(null);
   const timeline = useRef<HTMLDivElement>(null);
@@ -25,7 +27,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   };
 
   const handleFullscreen = () => {
-    player.current?.requestFullscreen();
+    // check if already in fulscreen
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+      return;
+    }
+    if (fullscreenObject.current?.requestFullscreen) {
+      fullscreenObject.current?.requestFullscreen();
+    }
   };
 
   const handlePausePlay = () => {
@@ -92,10 +101,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   };
 
   const handleTimelineUpdate = (e: any) => {
-    const timelineWidth = e.srcElement.offsetWidth;
-    console.log(e, timelineWidth);
-    const clickPosition = e.offsetX;
-    const clickPositionInPercent = clickPosition / timelineWidth;
+    const rect = timeline.current!.getBoundingClientRect();
+    const clickPositionInPercent =
+      Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
     player.current!.currentTime =
       clickPositionInPercent * player.current!.duration;
     const progress = player.current!.currentTime / player.current!.duration;
@@ -133,7 +141,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       setVideoHeight(player.current!.videoHeight);
       setVideoWidth(player.current!.videoWidth);
     });
+    player.current!.addEventListener("pause", () => {
+      setIsPaused(true);
+    });
+    player.current!.addEventListener("play", () => {
+      setIsPaused(false);
+    });
 
+    timeline.current!.addEventListener("click", handleTimelineUpdate);
     timeline.current!.addEventListener("mousemove", handlePreviewPosition);
     timeline.current!.addEventListener("mousedown", handleScrubbing);
     document.addEventListener("mouseup", (e) => {
@@ -145,6 +160,26 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
 
     return () => {
       player.current!.removeEventListener("timeupdate", handleTimeUpdate);
+      player.current!.removeEventListener("loadedmetadata", () => {
+        setVideoHeight(player.current!.videoHeight);
+        setVideoWidth(player.current!.videoWidth);
+      });
+      player.current!.removeEventListener("pause", () => {
+        setIsPaused(true);
+      });
+      player.current!.removeEventListener("play", () => {
+        setIsPaused(false);
+      });
+
+      timeline.current!.removeEventListener("click", handleTimelineUpdate);
+      timeline.current!.removeEventListener("mousemove", handlePreviewPosition);
+      timeline.current!.removeEventListener("mousedown", handleScrubbing);
+      document.removeEventListener("mouseup", (e) => {
+        if (isScrubbing) handleScrubbing(e);
+      });
+      document.removeEventListener("mousemove", (e) => {
+        if (isScrubbing) handleTimelineUpdate(e);
+      });
     };
   }, []);
 
@@ -172,9 +207,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               <span className={cl.duration}>{duration}</span>
             </div>
           </div>
+          <div className={cl.right}>
+            <button className={cl.playbackButton} onClick={handleFullscreen}>
+              <FullscreenIcon />
+            </button>
+          </div>
         </div>
       </div>
-      <div className={cl.playerContainer}>
+      <div className={cl.playerContainer} onClick={handlePausePlay}>
         <WithBlur
           blurRegions={[
             {

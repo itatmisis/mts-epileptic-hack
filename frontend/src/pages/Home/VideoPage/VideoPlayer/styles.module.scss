@@ -6,9 +6,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    object-fit: contain;
     .player {
-      min-height: 600px;
+      pointer-events: none;
       max-height: 60vh;
+      min-height: 500px;
+      max-width: 600px;
+      // min-height: 600px;
+      // max-height: 60vh;
+    }
+  }
+  &:fullscreen {
+    .playerContainer {
+      width: 100vw;
+      height: 100vh;
+      .player {
+        max-height: none;
+        height: 100vh;
+        width: 100%;
+      }
     }
   }
   .overlay {
@@ -92,26 +108,27 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 10px;
-      .left {
+      .left,
+      .right {
         display: flex;
         align-items: center;
         gap: 10px;
-        .playbackButton {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: none;
-          border: none;
-          padding: 0;
-          width: 30px;
-          height: 30px;
-          color: var(--text-light);
-          cursor: pointer;
-          border-radius: 50%;
-          &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--primary);
-          }
+      }
+      .playbackButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        color: var(--text-light);
+        cursor: pointer;
+        border-radius: 50%;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: var(--primary);
         }
       }
     }
