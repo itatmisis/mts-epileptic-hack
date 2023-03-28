@@ -22,11 +22,69 @@
         width: auto;
       }
     }
+    .nav__items {
+      margin-left: 16px;
+      display: flex;
+      gap: 16px;
+      .nav__item {
+        color: var(--text-lightest);
+        text-decoration: none;
+        font-size: 18px;
+        &.active {
+          color: red;
+        }
+      }
+    }
   }
   .nav__right {
     margin-left: auto;
     display: flex;
     align-items: center;
+    .search {
+      position: relative;
+      width: 100%;
+      margin-right: 16px;
+      color: var(--text-medium);
+      margin-top: 2px;
+      .search__icon {
+        position: absolute;
+        top: 9px;
+        left: 12px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .search__input {
+        padding: 12px;
+        padding-left: 46px;
+        font-size: 18px;
+        background-color: transparent;
+        box-sizing: border-box;
+        outline: none;
+        color: var(--text-light);
+        background-color: var(--bg-primary);
+        border: none;
+        border-radius: 12px;
+        width: 100%;
+        transition: border-color 0.3s ease;
+        &:focus {
+          border: 2px solid var(--color-accent-1);
+        }
+        &::placeholder {
+          color: var(--text-medium);
+        }
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
+      }
+    }
     .voiceStatus {
       display: flex;
       transition: color 0.25s ease-out;
@@ -64,11 +122,33 @@
     }
   }
 }
+@media screen and (max-width: 800px) {
+  .nav__wrapper {
+    .nav {
+      .nav__items {
+        display: none;
+      }
+    }
+  }
+}
 
 @media screen and (max-width: 600px) {
   .nav__wrapper {
     padding-inline: 12px;
+    .nav {
+      .nav__logo {
+        display: none;
+      }
+    }
     .nav__right {
+      width: 100%;
+      .search {
+        width: 100%;
+        margin-right: 12px;
+      }
+      .voiceStatus {
+        margin-right: 12px;
+      }
       .profile {
         .profile__avatar {
           margin-right: 0;

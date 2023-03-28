@@ -1,8 +1,8 @@
 $tooltip-min-width: 50px;
 $tooltip-max-width: 150px;
 $arrow-size: 5px;
-$tooltip-bg: rgba(0, 0, 0, 0.3);
-$tooltip-color: var(--text-light);
+$tooltip-bg: rgba(0, 0, 0, 0.6);
+$tooltip-color: var(--text-lightest);
 
 [data-tooltip] {
   display: flex;

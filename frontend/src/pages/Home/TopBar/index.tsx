@@ -2,6 +2,7 @@ import cl from "./styles.module.scss";
 import { ReactComponent as LogoFull } from "./assets/icons/kion_full.svg";
 import { ReactComponent as UserIcon } from "./assets/icons/user.svg";
 import { ReactComponent as VoiceIcon } from "@/assets/icons/voice.svg";
+import { ReactComponent as SearchIcon } from "./assets/icons/search.svg";
 import { useContext } from "react";
 import { SpeechRecognitionContext } from "@/providers/SpeechRecognition";
 import { WithTooltip } from "@/components";
@@ -22,7 +23,23 @@ const TopBar = () => {
         <a href="#main-content" className={cl.nav__skipLink}>
           Пропустить навигацию
         </a>
+        <div className={cl.nav__items}>
+          <a href="#" className={`${cl.nav__item} ${cl.active}`}>
+            Фильмы
+          </a>
+          <a href="#" className={cl.nav__item}>
+            Сериалы
+          </a>
+        </div>
         <div className={cl.nav__right}>
+          <div className={cl.search}>
+            <SearchIcon className={cl.search__icon} />
+            <input
+              className={cl.search__input}
+              type="text"
+              placeholder="Поиск"
+            />
+          </div>
           <div className={`${cl.voiceStatus} ${listening ? cl.active : ""}`}>
             <WithTooltip
               tooltip={
