@@ -22,7 +22,7 @@ interface VideoPlayerProps {
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [isAccessibilityPopupOpen, setIsAccessibilityPopupOpen] =
-    useState(true);
+    useState(false);
   const [duration, setDuration] = useState("0:00 / 0:00");
   const [videoHeight, setVideoHeight] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
@@ -197,6 +197,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     document.addEventListener("fullscreenchange", () => {
       if (document.fullscreenElement) {
         setIsFullscreen(true);
+        screen.orientation
+          .lock("landscape-primary")
+          .then(function () {
+            // alert("Locked");
+          })
+          .catch(function (error) {
+            // alert(error);
+          });
       } else {
         setIsFullscreen(false);
       }
