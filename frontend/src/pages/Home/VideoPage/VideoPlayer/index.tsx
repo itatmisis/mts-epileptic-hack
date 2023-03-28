@@ -146,7 +146,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       progress.toString()
     );
 
-    // format to mm:ss/total
+    updateDuration();
+  };
+
+  const updateDuration = () => {
     const currentTime = player.current!.currentTime;
     const minutes = Math.floor(currentTime / 60);
     const seconds = Math.floor(currentTime - minutes * 60);
@@ -166,6 +169,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.addEventListener("loadedmetadata", () => {
       setVideoHeight(player.current!.videoHeight);
       setVideoWidth(player.current!.videoWidth);
+      updateDuration();
     });
     player.current!.addEventListener("pause", () => {
       setIsPaused(true);
@@ -197,6 +201,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       player.current!.removeEventListener("loadedmetadata", () => {
         setVideoHeight(player.current!.videoHeight);
         setVideoWidth(player.current!.videoWidth);
+        updateDuration();
       });
       player.current!.removeEventListener("pause", () => {
         setIsPaused(true);
@@ -233,6 +238,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     >
       {isAccessibilityPopupOpen && (
         <AccessibilityPopup
+          videoRef={player}
           onClose={() => setIsAccessibilityPopupOpen(false)}
         />
       )}
@@ -315,6 +321,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               y: 250,
               width: 200,
               height: 200,
+            },
+            {
+              x: 900,
+              y: 150,
+              width: 300,
+              height: 400,
             },
           ]}
           // get original width and height of the video

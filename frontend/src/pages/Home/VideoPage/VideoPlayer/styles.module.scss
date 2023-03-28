@@ -92,7 +92,8 @@
         aspect-ratio: 1 / 1;
         pointer-events: none;
       }
-      &:hover {
+      &:hover,
+      &:focus {
         height: 100%;
         &::before {
           display: block;
@@ -133,7 +134,8 @@
         }
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
-          color: var(--primary);
+          // color: var(--primary);
+          color: var(--text-lightest);
         }
       }
       .durationContainer {

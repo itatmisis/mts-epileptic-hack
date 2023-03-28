@@ -16,7 +16,7 @@ const Slider = ({ value, ...props }: SliderProps) => {
       className={cl.slider}
       style={
         {
-          "--value": value,
+          "--value": value / parseInt(props.max!),
         } as CSSProperties
       }
       value={value}

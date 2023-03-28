@@ -11,7 +11,10 @@ const Home = () => {
       <header>
         <TopBar />
       </header>
-      <main id="main-content" style={{ height: "100%", width: "100%" }}>
+      <main
+        id="main-content"
+        style={{ height: "100%", width: "100%", overflow: "hidden" }}
+      >
         <Routes>
           <Route index element={<VideoPage />} />
           <Route path="test" element={<VoiceTest />} />

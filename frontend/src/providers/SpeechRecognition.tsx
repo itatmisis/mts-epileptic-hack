@@ -25,7 +25,7 @@ export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
   const [commandText, setCommandText] = useState("");
   const commands = [
     {
-      command: ["плеер *"],
+      command: ["плеер *", "player *"],
       callback: handleCommand,
       matchInterim: true,
     },

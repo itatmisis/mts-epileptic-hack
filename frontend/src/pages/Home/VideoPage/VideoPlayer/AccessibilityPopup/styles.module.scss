@@ -2,9 +2,29 @@
   position: absolute;
   bottom: 50px;
   right: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 12px;
+  border-radius: 12px;
+  width: 300px;
   z-index: 3;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  .option {
+    display: flex;
+    flex-direction: column;
+    .option__title,
+    .option__value {
+      user-select: none;
+    }
+    .option__title {
+      margin-bottom: 6px;
+    }
+    .option__value {
+      font-size: 14px;
+      font-family: "MTSSansRegular";
+      color: var(--text-medium);
+    }
+  }
 }
