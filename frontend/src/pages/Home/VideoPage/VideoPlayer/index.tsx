@@ -138,7 +138,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       player.current!.duration - totalMinutes * 60
     );
     setDuration(
-      `${minutes}:${seconds < 10 ? "0" + seconds : seconds}/${totalMinutes}:${
+      `${minutes}:${seconds < 10 ? "0" + seconds : seconds} / ${totalMinutes}:${
         totalSeconds < 10 ? "0" + totalSeconds : totalSeconds
       }`
     );
