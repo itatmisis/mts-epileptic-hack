@@ -7,8 +7,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Emgu.CV" Version="4.6.0.5131" />
+        <PackageReference Include="Emgu.CV.runtime.ubuntu-x64" Version="4.6.0.5131" />
+        <PackageReference Include="Emgu.CV.runtime.xamarin.mini.macos" Version="4.6.0.5131" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Infrastucture\DataAccess\Postgres" />
+      <Folder Include="Infrastucture\DataAccess\S3" />
     </ItemGroup>
 
 </Project>
