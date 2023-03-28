@@ -2,16 +2,17 @@
   width: 100%;
   position: relative;
   .playerContainer {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), white);
+    background: black;
     display: flex;
     align-items: center;
     justify-content: center;
     object-fit: contain;
+    min-height: 600px;
     .player {
       pointer-events: none;
       max-height: 60vh;
-      min-height: 500px;
-      max-width: 600px;
+      object-fit: contain;
+      width: 100%;
       // min-height: 600px;
       // max-height: 60vh;
     }
@@ -35,6 +36,8 @@
     position: absolute;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
     // bg
     &::before {
       content: "";
@@ -131,6 +134,12 @@
           color: var(--primary);
         }
       }
+    }
+  }
+  &:hover,
+  &:focus-within {
+    .overlay {
+      opacity: 1;
     }
   }
 }
