@@ -12,9 +12,11 @@ interface WithBlurProps {
   originalWidth: number;
   originalHeight: number;
   children: React.ReactNode;
+  isFullscreen?: boolean;
 }
 
 const WithBlur: React.FC<WithBlurProps> = ({
+  isFullscreen = false,
   blurRegions,
   originalWidth,
   originalHeight,
@@ -23,8 +25,9 @@ const WithBlur: React.FC<WithBlurProps> = ({
   return (
     <div
       style={{
-        width: "fit-content",
+        width: isFullscreen ? "fit-content" : "100%",
         height: "fit-content",
+
         // width: "100%",
         // height: "100%",
         position: "relative",

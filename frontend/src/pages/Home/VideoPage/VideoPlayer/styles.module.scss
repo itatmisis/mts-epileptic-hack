@@ -6,11 +6,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    object-fit: contain;
-    min-height: 600px;
+    aspect-ratio: 16 / 10;
     .player {
       pointer-events: none;
-      max-height: 60vh;
       object-fit: contain;
       width: 100%;
       // min-height: 600px;
@@ -129,6 +127,10 @@
         color: var(--text-light);
         cursor: pointer;
         border-radius: 50%;
+        svg {
+          width: 24px;
+          height: 24px;
+        }
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
           color: var(--primary);

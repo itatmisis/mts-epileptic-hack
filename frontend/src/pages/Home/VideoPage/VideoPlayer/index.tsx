@@ -20,20 +20,19 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const player = useRef<HTMLVideoElement>(null);
   const timeline = useRef<HTMLDivElement>(null);
   const fullscreenObject = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // player
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    player.current!.volume = +e.target.value;
-  };
-
   const handleFullscreen = () => {
     // check if already in fulscreen
     if (document.fullscreenElement) {
       document.exitFullscreen();
+      setIsFullscreen(false);
       return;
     }
     if (fullscreenObject.current?.requestFullscreen) {
       fullscreenObject.current?.requestFullscreen();
+      setIsFullscreen(true);
     }
   };
 
@@ -157,6 +156,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     document.addEventListener("mousemove", (e) => {
       if (isScrubbing) handleTimelineUpdate(e);
     });
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement) {
+        setIsFullscreen(true);
+      } else {
+        setIsFullscreen(false);
+      }
+    });
 
     return () => {
       player.current!.removeEventListener("timeupdate", handleTimeUpdate);
@@ -216,6 +222,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       </div>
       <div className={cl.playerContainer} onClick={handlePausePlay}>
         <WithBlur
+          isFullscreen={isFullscreen}
           blurRegions={[
             {
               x: 0,
