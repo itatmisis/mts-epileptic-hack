@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import PubSub from "pubsub-js";
 import { IVoicePlayerCommand } from "@/providers/IVoicePlayerCommand";
 import testVideo from "./testVideo.mp4";
+import { ReactComponent as PlayIcon } from "./assets/play.svg";
+import { ReactComponent as PauseIcon } from "./assets/pause.svg";
 
 interface VideoPlayerProps {
   source: string;
@@ -60,41 +62,76 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   });
 
   // overlay
+  let isScrubbing = false;
+  let wasPlaying = false;
 
-  const handleTimelineUpdate = () => {
+  const handleScrubbing = (e: any) => {
+    if (e.type === "mousedown") {
+      isScrubbing = true;
+      wasPlaying = !player.current!.paused;
+      player.current!.pause();
+    }
+
+    if (e.type === "mouseup") {
+      isScrubbing = false;
+      if (wasPlaying) {
+        player.current!.play();
+      }
+    }
+  };
+
+  const handlePreviewPosition = (e: any) => {
+    const previewPosition = e.offsetX / e.srcElement.offsetWidth;
+    timeline.current?.style.setProperty(
+      "--preview-position",
+      previewPosition.toString()
+    );
+  };
+
+  const handleTimelineUpdate = (e: any) => {
+    const timelineWidth = e.srcElement.offsetWidth;
+    console.log(e, timelineWidth);
+    const clickPosition = e.offsetX;
+    const clickPositionInPercent = clickPosition / timelineWidth;
+    player.current!.currentTime =
+      clickPositionInPercent * player.current!.duration;
     const progress = player.current!.currentTime / player.current!.duration;
     setTimelineStyle((prev) => ({
       ...prev,
       "--progress-position": progress,
     }));
+    timeline.current?.style.setProperty(
+      "--progress-position",
+      progress.toString()
+    );
   };
 
-  const handleMouseMove = (e: any) => {
-    // --preview-position
-    const previewPosition = e.offsetX / e.srcElement.offsetWidth;
+  const handleTimeUpdate = (e: any) => {
+    const progress = player.current!.currentTime / player.current!.duration;
     setTimelineStyle((prev) => ({
       ...prev,
-      "--preview-position": previewPosition,
+      "--progress-position": progress,
     }));
-  };
-
-  const handleTimelineClick = (e: any) => {
-    const timelineWidth = e.srcElement.offsetWidth;
-    const clickPosition = e.offsetX;
-    const clickPositionInPercent = clickPosition / timelineWidth;
-    player.current!.currentTime =
-      clickPositionInPercent * player.current!.duration;
+    timeline.current?.style.setProperty(
+      "--progress-position",
+      progress.toString()
+    );
   };
 
   useEffect(() => {
-    player.current!.addEventListener("timeupdate", handleTimelineUpdate);
+    player.current!.addEventListener("timeupdate", handleTimeUpdate);
 
-    timeline.current!.addEventListener("click", handleTimelineClick);
-    timeline.current!.addEventListener("mousemove", handleMouseMove);
+    timeline.current!.addEventListener("mousedown", handleScrubbing);
+    document.addEventListener("mouseup", (e) => {
+      if (isScrubbing) handleScrubbing(e);
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (isScrubbing) handleTimelineUpdate(e);
+    });
+    timeline.current!.addEventListener("mousemove", handlePreviewPosition);
 
     return () => {
-      player.current!.removeEventListener("timeupdate", handleTimelineUpdate);
-      timeline.current!.removeEventListener("mousemove", handleMouseMove);
+      player.current!.removeEventListener("timeupdate", handleTimeUpdate);
     };
   }, []);
 
@@ -102,9 +139,21 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     <div ref={fullscreenObject} className={cl.videoWrapper}>
       <div className={cl.overlay}>
         <div className={cl.timelineContainer}>
-          <div className={cl.timeline} style={timelineStyle} ref={timeline}>
+          <div className={cl.timeline} ref={timeline}>
             <div className={cl.thumbIndicator}></div>
           </div>
+        </div>
+        <div className={cl.playbackControls}>
+          <button
+            className={`${cl.playbackButton} ${cl.play}`}
+            onClick={handlePausePlay}
+          >
+            {player.current?.paused ? (
+              <PlayIcon className={cl.playIcon} />
+            ) : (
+              <PauseIcon className={cl.playIcon} />
+            )}
+          </button>
         </div>
       </div>
       <video className={cl.video} ref={player} loop autoPlay muted>

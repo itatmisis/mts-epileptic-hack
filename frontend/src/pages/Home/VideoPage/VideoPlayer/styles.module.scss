@@ -11,6 +11,9 @@
     height: 45px;
     width: 100%;
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    // bg
     &::before {
       content: "";
       position: absolute;
@@ -21,6 +24,7 @@
       z-index: -1;
       pointer-events: none;
     }
+    // timeline
     .timelineContainer {
       height: 7px;
       display: flex;
@@ -63,6 +67,7 @@
         border-radius: 50%;
         transition: transform 150ms ease-in-out;
         aspect-ratio: 1 / 1;
+        pointer-events: none;
       }
       &:hover {
         height: 100%;
@@ -71,6 +76,30 @@
         }
         .thumbIndicator {
           --scale: 1;
+        }
+      }
+    }
+    // controls
+    .playbackControls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      .playbackButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        color: var(--text-light);
+        cursor: pointer;
+        border-radius: 50%;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          color: var(--primary);
         }
       }
     }
