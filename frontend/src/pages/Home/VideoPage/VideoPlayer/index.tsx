@@ -1,5 +1,5 @@
 import cl from "./styles.module.scss";
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import PubSub from "pubsub-js";
 import { IVoicePlayerCommand } from "@/providers/IVoicePlayerCommand";
 import testVideo from "./testVideo.mp4";
@@ -8,7 +8,11 @@ import { ReactComponent as PauseIcon } from "./assets/pause.svg";
 import { ReactComponent as FullscreenIcon } from "./assets/fullscreen.svg";
 import { ReactComponent as Forward10Icon } from "./assets/forward10.svg";
 import { ReactComponent as Backward10Icon } from "./assets/backward10.svg";
-import { WithBlur } from "@/components";
+import { ReactComponent as VolumeMuteIcon } from "./assets/volume_mute.svg";
+import { ReactComponent as VolumeLowIcon } from "./assets/volume_low.svg";
+import { ReactComponent as VolumeHighIcon } from "./assets/volume_high.svg";
+
+import { WithBlur, WithTooltip } from "@/components";
 
 interface VideoPlayerProps {
   source: string;
@@ -23,6 +27,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const timeline = useRef<HTMLDivElement>(null);
   const fullscreenObject = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [volume, setVolume] = useState(1);
 
   // player
   const handleFullscreen = () => {
@@ -46,10 +51,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.pause();
   };
 
-  const handleVolume = (volume: number) => {
-    player.current!.volume = volume / 100;
-  };
-
   const handleCommand = (data: IVoicePlayerCommand) => {
     console.log(data);
     const command = data.command;
@@ -58,7 +59,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         handlePausePlay();
         break;
       case "volume":
-        handleVolume(data.value ?? 0);
+        if (data.value) {
+          if (data.append) appendVolume(data.value);
+          else setVolume(data.value);
+        }
         break;
       case "fullscreen":
         handleFullscreen();
@@ -74,6 +78,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.currentTime = time;
   };
 
+  const appendVolume = (volume: number) => {
+    setVolume((prev) => (prev += volume));
+  };
+
+  // voice commands
   useEffect(() => {
     PubSub.subscribe("voicePlayerCommand", (msg, data) => handleCommand(data));
 
@@ -81,6 +90,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       PubSub.unsubscribe("voicePlayerCommand");
     };
   });
+
+  // volume update
+  useEffect(() => {
+    player.current!.volume = volume;
+  }, [volume]);
 
   // overlay
   let isScrubbing = false;
@@ -248,6 +262,38 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             >
               <Forward10Icon />
             </button>
+            <div className={cl.volumeContainer}>
+              <button
+                className={cl.volumeButton}
+                onClick={() => {
+                  setVolume(volume === 0 ? 1 : 0);
+                }}
+              >
+                {volume === 0 ? (
+                  <VolumeMuteIcon />
+                ) : volume < 0.5 ? (
+                  <VolumeLowIcon />
+                ) : (
+                  <VolumeHighIcon />
+                )}
+              </button>
+              <input
+                className={cl.volumeSlider}
+                style={
+                  {
+                    "--volume-position": `${volume}`,
+                  } as CSSProperties
+                }
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={(e) => {
+                  setVolume(parseFloat(e.target.value));
+                }}
+              />
+            </div>
             <div className={cl.durationContainer}>
               <span className={cl.duration}>{duration}</span>
             </div>
@@ -274,7 +320,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
           originalHeight={videoHeight}
           originalWidth={videoWidth}
         >
-          <video className={cl.player} ref={player} loop autoPlay muted>
+          <video className={cl.player} ref={player} loop autoPlay>
             <source src={testVideo} />
           </video>
         </WithBlur>
