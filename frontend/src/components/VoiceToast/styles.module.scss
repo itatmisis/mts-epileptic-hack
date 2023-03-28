@@ -9,7 +9,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-medium);
   padding-inline: 16px;
-  transition: transform 0.3s ease-in-out, color 0.3s ease-in;
+  transition: transform 0.3s ease-in-out, color 1s ease-in, opacity 0.3s ease-in;
   transform: translateX(0);
 
   width: 350px;
@@ -33,6 +33,7 @@
   }
   &.hidden {
     transform: translateX(calc(100% + 24px));
+    opacity: 0;
   }
   &.closing {
     color: var(--text-lightest);

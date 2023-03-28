@@ -1,4 +1,4 @@
-import { Slider } from "@/components";
+import { Combobox, Slider } from "@/components";
 import { useEffect, useRef, useState } from "react";
 import cl from "./styles.module.scss";
 import { ReactComponent as ResetIcon } from "./assets/reset.svg";
@@ -11,6 +11,7 @@ interface AccessibilityPopupProps {
   setContrast: (value: number) => void;
   setSaturation: (value: number) => void;
   setBrightness: (value: number) => void;
+  setDaltonism: (value: string) => void;
 }
 
 const AccessibilityControls = ({
@@ -21,6 +22,7 @@ const AccessibilityControls = ({
   setContrast,
   setSaturation,
   setBrightness,
+  setDaltonism,
 }: AccessibilityPopupProps) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -107,6 +109,41 @@ const AccessibilityControls = ({
         <button className={cl.option__reset} onClick={() => setBrightness(1)}>
           <ResetIcon />
         </button>
+      </div>
+      <div className={cl.option}>
+        <div className={cl.option__body}>
+          <div className={cl.option__title} style={{ marginBottom: "4px" }}>
+            <p>Дальтонизм</p>
+          </div>
+          <Combobox
+            options={["Обычный", "Детеранопия", "Тританопия", "Протанопия"]}
+            onChange={() => {}}
+          />
+        </div>
+      </div>
+      <div className={cl.option}>
+        <div className={cl.option__body}>
+          <div className={cl.option__title}>
+            <p>Защита от эпилепсии</p>
+          </div>
+          <form className={cl.option__radio}>
+            <input
+              value="1"
+              type="radio"
+              name="epilepsy-defence"
+              id="epilepsy-defence-on"
+              defaultChecked
+            />
+            <label htmlFor="epilepsy-defence-on">Включено</label>
+            <input
+              value="2"
+              type="radio"
+              name="epilepsy-defence"
+              id="epilepsy-defence-off"
+            />
+            <label htmlFor="epilepsy-defence-off">Выключено</label>
+          </form>
+        </div>
       </div>
     </div>
   );

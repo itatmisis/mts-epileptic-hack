@@ -36,6 +36,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
   const [contrast, setContrast] = useState(1);
   const [saturation, setSaturation] = useState(1);
   const [brightness, setBrightness] = useState(1);
+  const [daltonism, setDaltonism] = useState("none");
 
   // player
   const handleFullscreen = () => {
@@ -346,7 +347,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               style={{
                 filter: `contrast(${contrast}) saturate(${saturation}) brightness(${brightness})`,
               }}
-              className={cl.player}
+              className={`${cl.player} ${cl.deutranopiaFilter}`}
               ref={player}
               loop
               autoPlay
@@ -365,6 +366,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               setSaturation={setSaturation}
               setContrast={setContrast}
               setBrightness={setBrightness}
+              setDaltonism={setDaltonism}
             />
           </div>
         )}
@@ -383,6 +385,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               setSaturation={setSaturation}
               setContrast={setContrast}
               setBrightness={setBrightness}
+              setDaltonism={setDaltonism}
             />
           )}
         />

@@ -1,12 +1,14 @@
 .accessibilityControls {
   width: 100%;
   background-color: var(--bg-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 16px 12px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
   .option {
     display: flex;
     align-items: center;
@@ -51,9 +53,42 @@
       color: var(--text-medium);
       margin-bottom: 5px;
     }
+    .option__radio {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      input[type="radio"] {
+        display: none;
+      }
+      label {
+        width: 100%;
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        padding-left: 25px;
+        margin-right: 0;
+        line-height: 18px;
+        user-select: none;
+        font-family: "MTSSansRegular";
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          left: 1px;
+          // resize ./assets/radio.svg to 20px
+          background: url("./assets/radio-off.svg") no-repeat;
+        }
+      }
+      input[type="radio"]:checked + label:before {
+        background: url("./assets/radio-on.svg") no-repeat;
+      }
+    }
   }
   @media screen and (max-width: 600px) {
     padding: 0;
     border: none;
+    background: none;
   }
 }

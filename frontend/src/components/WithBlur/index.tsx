@@ -1,5 +1,3 @@
-import React from "react";
-
 interface BlurRegion {
   x: number;
   y: number;
