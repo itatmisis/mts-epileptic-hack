@@ -93,10 +93,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
 
   // voice commands
   useEffect(() => {
-    PubSub.subscribe("voicePlayerCommand", (msg, data) => handleCommand(data));
+    let pubsubToken = PubSub.subscribe("voicePlayerCommand", (msg, data) =>
+      handleCommand(data)
+    );
 
     return () => {
-      PubSub.unsubscribe("voicePlayerCommand");
+      PubSub.unsubscribe(pubsubToken);
     };
   });
 

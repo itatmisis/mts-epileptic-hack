@@ -14,9 +14,10 @@
   transform: translateX(0);
 
   width: 350px;
+  padding-block: 12px;
   min-height: 64px;
   border-radius: 8px;
-  .voiceToast__body {
+  .voiceToast__content {
     flex: 1;
     display: flex;
     align-items: center;
@@ -24,8 +25,26 @@
     gap: 8px;
     .voiceToast__text {
       flex: 1;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       word-wrap: break-word;
+      .voiceToast__commandType {
+        display: flex;
+        align-items: end;
+        color: var(--text-medium);
+        transition: all 0.3s ease-in-out;
+        font-size: 12px;
+        min-height: 20px;
+        margin-bottom: 6px;
+        &.detected {
+          font-size: 20px;
+          color: var(--text-lightest);
+        }
+      }
+      .voiceText__commandText {
+        transition: all 0.3s ease-in-out;
+      }
     }
     .voiceToast__checkmarkWrapper {
       margin-left: auto;
@@ -38,6 +57,9 @@
   }
   &.closing {
     color: var(--text-lightest);
+    .voiceText__commandText {
+      font-size: 12px;
+    }
   }
 }
 
