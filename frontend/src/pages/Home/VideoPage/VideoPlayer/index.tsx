@@ -150,6 +150,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     timeline.current!.addEventListener("click", handleTimelineUpdate);
     timeline.current!.addEventListener("mousemove", handlePreviewPosition);
     timeline.current!.addEventListener("mousedown", handleScrubbing);
+
     document.addEventListener("mouseup", (e) => {
       if (isScrubbing) handleScrubbing(e);
     });
@@ -180,18 +181,30 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       timeline.current!.removeEventListener("click", handleTimelineUpdate);
       timeline.current!.removeEventListener("mousemove", handlePreviewPosition);
       timeline.current!.removeEventListener("mousedown", handleScrubbing);
+
       document.removeEventListener("mouseup", (e) => {
         if (isScrubbing) handleScrubbing(e);
       });
       document.removeEventListener("mousemove", (e) => {
         if (isScrubbing) handleTimelineUpdate(e);
       });
+      document.removeEventListener("fullscreenchange", () => {
+        if (document.fullscreenElement) {
+          setIsFullscreen(true);
+        } else {
+          setIsFullscreen(false);
+        }
+      });
     };
   }, []);
 
   return (
-    <div ref={fullscreenObject} className={cl.videoWrapper}>
-      <div className={cl.overlay}>
+    <div
+      ref={fullscreenObject}
+      className={cl.videoWrapper}
+      onDoubleClick={handleFullscreen}
+    >
+      <div className={cl.overlay} onClick={(e) => e.preventDefault()}>
         <div className={cl.timelineContainer}>
           <div className={cl.timeline} ref={timeline}>
             <div className={cl.thumbIndicator}></div>
