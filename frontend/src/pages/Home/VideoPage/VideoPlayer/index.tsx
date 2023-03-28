@@ -6,6 +6,8 @@ import testVideo from "./testVideo.mp4";
 import { ReactComponent as PlayIcon } from "./assets/play.svg";
 import { ReactComponent as PauseIcon } from "./assets/pause.svg";
 import { ReactComponent as FullscreenIcon } from "./assets/fullscreen.svg";
+import { ReactComponent as Forward10Icon } from "./assets/forward10.svg";
+import { ReactComponent as Backward10Icon } from "./assets/backward10.svg";
 import { WithBlur } from "@/components";
 
 interface VideoPlayerProps {
@@ -62,6 +64,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         handleFullscreen();
         break;
     }
+  };
+
+  const appendTime = (time: number) => {
+    player.current!.currentTime += time;
+  };
+
+  const setTime = (time: number) => {
+    player.current!.currentTime = time;
   };
 
   useEffect(() => {
@@ -221,6 +231,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               ) : (
                 <PauseIcon />
               )}
+            </button>
+            <button
+              className={cl.playbackButton}
+              onClick={() => {
+                appendTime(-10);
+              }}
+            >
+              <Backward10Icon />
+            </button>
+            <button
+              className={cl.playbackButton}
+              onClick={() => {
+                appendTime(10);
+              }}
+            >
+              <Forward10Icon />
             </button>
             <div className={cl.durationContainer}>
               <span className={cl.duration}>{duration}</span>
