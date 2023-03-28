@@ -1,3 +1,9 @@
+"""
+    Установки:
+        1)  pip install git+https://github.com/Adapter-Hub/adapter-transformers.git
+        2)  pip install torch
+"""
+
 import json
 from transformers import RobertaConfig, RobertaModelWithHeads, TrainingArguments, \
     RobertaTokenizer, TextClassificationPipeline
