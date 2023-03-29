@@ -4,7 +4,7 @@ import { ReactComponent as HomeIcon } from "./assets/home.svg";
 
 const BottomMobileNav = () => {
   return (
-    <div className={cl.bottomMobileNav}>
+    <nav className={cl.bottomMobileNav}>
       <div className={cl.bottomMobileNav__item}>
         <div className={cl.bottomMobileNav__icon}>
           <HomeIcon />
@@ -17,7 +17,7 @@ const BottomMobileNav = () => {
         </div>
         <div className={cl.bottomMobileNav__text}>Видео</div>
       </div>
-    </div>
+    </nav>
   );
 };
 

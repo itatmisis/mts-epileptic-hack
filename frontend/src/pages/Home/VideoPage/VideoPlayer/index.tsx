@@ -213,22 +213,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     });
 
     return () => {
-      player.current!.removeEventListener("timeupdate", handleTimeUpdate);
-      player.current!.removeEventListener("loadedmetadata", () => {
-        setVideoHeight(player.current!.videoHeight);
-        setVideoWidth(player.current!.videoWidth);
-        updateDuration();
-      });
-      player.current!.removeEventListener("pause", () => {
-        setIsPaused(true);
-      });
-      player.current!.removeEventListener("play", () => {
-        setIsPaused(false);
-      });
+      // player.current!.removeEventListener("timeupdate", handleTimeUpdate);
+      // player.current!.removeEventListener("loadedmetadata", () => {
+      //   setVideoHeight(player.current!.videoHeight);
+      //   setVideoWidth(player.current!.videoWidth);
+      //   updateDuration();
+      // });
+      // player.current!.removeEventListener("pause", () => {
+      //   setIsPaused(true);
+      // });
+      // player.current!.removeEventListener("play", () => {
+      //   setIsPaused(false);
+      // });
 
-      timeline.current!.removeEventListener("click", handleTimelineUpdate);
-      timeline.current!.removeEventListener("mousemove", handlePreviewPosition);
-      timeline.current!.removeEventListener("mousedown", handleScrubbing);
+      // timeline.current!.removeEventListener("click", handleTimelineUpdate);
+      // timeline.current!.removeEventListener("mousemove", handlePreviewPosition);
+      // timeline.current!.removeEventListener("mousedown", handleScrubbing);
 
       document.removeEventListener("mouseup", (e) => {
         if (isScrubbing) handleScrubbing(e);
@@ -250,6 +250,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     <>
       <div
         ref={fullscreenObject}
+        id="videoWrapper"
         className={cl.videoWrapper}
         onDoubleClick={handleFullscreen}
       >

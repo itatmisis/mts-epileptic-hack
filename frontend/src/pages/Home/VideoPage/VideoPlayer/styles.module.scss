@@ -2,6 +2,8 @@
   width: 100%;
   position: relative;
   background: black;
+  display: flex;
+  flex-direction: column;
   .playerContainer {
     background: black;
     display: flex;
@@ -199,7 +201,7 @@
 }
 @media screen and (max-width: 600px) {
   .videoWrapper {
-    position: fixed;
+    position: absolute;
     right: 12px;
     width: calc(100% - 24px);
     z-index: 5;
