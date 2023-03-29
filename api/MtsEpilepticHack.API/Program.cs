@@ -19,8 +19,8 @@ app.UseCors(x
     =>
 {
     x.AllowAnyHeader();
-    x.AllowCredentials();
     x.AllowAnyOrigin();
+    x.AllowAnyMethod();
 });
 app.UseAuthorization();
 
