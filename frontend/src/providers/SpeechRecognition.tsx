@@ -7,7 +7,6 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import debounce from "../utils/debounce";
 import PubSub from "pubsub-js";
-import { IVoicePlayerCommand } from "./IVoicePlayerCommand";
 import { IVoiceCommand } from "./IVoiceCommand";
 
 interface SpeechRecognitionContextType {
