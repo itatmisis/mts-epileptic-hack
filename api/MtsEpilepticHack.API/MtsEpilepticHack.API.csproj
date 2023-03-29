@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.5" />
+        <PackageReference Include="AWSSDK.S3" Version="3.7.103.37" />
         <PackageReference Include="Emgu.CV" Version="4.6.0.5131" />
         <PackageReference Include="Emgu.CV.runtime.ubuntu-x64" Version="4.6.0.5131" />
         <PackageReference Include="Emgu.CV.runtime.xamarin.mini.macos" Version="4.6.0.5131" />
@@ -15,8 +17,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Infrastucture\DataAccess\Postgres" />
-      <Folder Include="Infrastucture\DataAccess\S3" />
+      <Compile Update="Infrastucture\DataAccess\Postgres\PostgresConnectionFactory.cs">
+        <DependentUpon>IPostgresConnectionFactory.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

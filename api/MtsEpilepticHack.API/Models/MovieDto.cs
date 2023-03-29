@@ -10,5 +10,7 @@ public record MovieDto
 
     public string PreviewUrl { get; init; } = null!;
 
-    public Dictionary<QualityPreset, string> PlaybackUrls { get; init; } = new();
+    public Dictionary<QualityPreset, VideoWithSubtitles> PlaybackUrls { get; init; } = new();
+    
+    public Dictionary<QualityPreset, VideoWithSubtitles> PlaybackAdaptedUrls { get; init; } = new();
 }
