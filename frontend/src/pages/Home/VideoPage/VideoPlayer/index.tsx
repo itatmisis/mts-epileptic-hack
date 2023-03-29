@@ -87,8 +87,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.currentTime = time;
   };
 
-  const appendVolume = (volume: number) => {
-    setVolume((prev) => (prev += volume));
+  const appendVolume = (volumeAppend: number) => {
+    setVolume((prev) => {
+      const newVolume = prev + volumeAppend;
+      if (newVolume > 1) return 1;
+      if (newVolume < 0) return 0;
+      return newVolume;
+    });
   };
 
   // voice commands
@@ -212,24 +217,40 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       }
     });
 
+    // keyboard events
+    const keyboardEvents = (e: any) => {
+      // @ts-ignore
+      fullscreenObject.current?.querySelector("#volume")?.blur();
+      switch (e.key) {
+        case " ":
+          handlePausePlay();
+          break;
+        case "ArrowLeft":
+          appendTime(-5);
+          break;
+        case "ArrowRight":
+          appendTime(5);
+          break;
+        case "ArrowUp":
+          appendVolume(0.1);
+          // hover on volume
+          // @ts-ignore
+          fullscreenObject.current?.querySelector("#volume")?.focus();
+          break;
+        case "ArrowDown":
+          appendVolume(-0.1);
+          // @ts-ignore
+          fullscreenObject.current?.querySelector("#volume")?.focus();
+          break;
+        case "f":
+          handleFullscreen();
+          break;
+      }
+    };
+    document.addEventListener("keydown", keyboardEvents);
+
     return () => {
-      // player.current!.removeEventListener("timeupdate", handleTimeUpdate);
-      // player.current!.removeEventListener("loadedmetadata", () => {
-      //   setVideoHeight(player.current!.videoHeight);
-      //   setVideoWidth(player.current!.videoWidth);
-      //   updateDuration();
-      // });
-      // player.current!.removeEventListener("pause", () => {
-      //   setIsPaused(true);
-      // });
-      // player.current!.removeEventListener("play", () => {
-      //   setIsPaused(false);
-      // });
-
-      // timeline.current!.removeEventListener("click", handleTimelineUpdate);
-      // timeline.current!.removeEventListener("mousemove", handlePreviewPosition);
-      // timeline.current!.removeEventListener("mousedown", handleScrubbing);
-
+      document.removeEventListener("keydown", keyboardEvents);
       document.removeEventListener("mouseup", (e) => {
         if (isScrubbing) handleScrubbing(e);
       });
@@ -288,7 +309,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
               >
                 <Forward10Icon />
               </button>
-              <div className={cl.volumeContainer} tabIndex={0}>
+              <div id="volume" className={cl.volumeContainer} tabIndex={0}>
                 <button
                   className={cl.volumeButton}
                   onClick={() => {
