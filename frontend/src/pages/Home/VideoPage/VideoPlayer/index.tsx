@@ -110,7 +110,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
         if (data.descriptor == "на") {
           appendBrightness((data.value! / 100) * brightnessMultiplier);
         } else {
-          setBrightness((data.value! / 100) * brightnessMultiplier);
+          setBrightness(data.value! / 100);
         }
         break;
       case "contrast_up":
@@ -124,7 +124,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             return newContrast;
           });
         } else {
-          setContrast((data.value! / 100) * contrastMultiplier);
+          setContrast(data.value! / 100);
         }
         break;
       case "saturation_up":
@@ -139,7 +139,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
             return newSaturation;
           });
         } else {
-          setSaturation((data.value! / 100) * saturationMultiplier);
+          setSaturation(data.value! / 100);
         }
         break;
       case "skip":
