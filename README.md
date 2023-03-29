@@ -1,9 +1,13 @@
 # mts-epileptic-hack
-Сервис для просмотра видео для людей с ограниченными возможностями.
+Сервис для просмотра видео для людей с ограниченными возможностями.<br/>
+Демо:  <br/> http://138.124.180.37/
+Демо api: http://91.185.84.103:8080/swagger/index.html <br/>
 
-Демо: 
+ml-video-processor/processor.py - скрипт для блюра участков кадра <br/>
+ml-voice-recognition-api/prediction_model_adapter.py текстовая модель для voice recognition <br/>
 
-Демо api: http://91.185.84.103:8080/swagger/index.html
+Frontend - brach frontend
+
 
 
 
