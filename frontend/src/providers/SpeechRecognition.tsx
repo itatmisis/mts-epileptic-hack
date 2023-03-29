@@ -8,6 +8,7 @@ import SpeechRecognition, {
 import debounce from "../utils/debounce";
 import PubSub from "pubsub-js";
 import { IVoicePlayerCommand } from "./IVoicePlayerCommand";
+import { IVoiceCommand } from "./IVoiceCommand";
 
 interface SpeechRecognitionContextType {
   transcript: string;
@@ -47,11 +48,18 @@ export const SpeechRecognitionProvider = ({ children }: { children: any }) => {
     commandDebouncer(text);
   }
 
-  function notifyCustomCommands(text: string) {
+  async function notifyCustomCommands(text: string) {
+    // `http://91.185.84.103/api/v1/voice?input=${text}`
+    const response = await fetch(
+      `http://91.185.84.103:8080/api/v1/voice/${text}`
+    );
+    const recognizedData = await response.json();
+    console.log(recognizedData);
     PubSub.publish("voicePlayerCommand", {
-      command: "pausePlay",
-      words: text.split(" "),
-    } as IVoicePlayerCommand);
+      action: recognizedData.action,
+      descriptor: recognizedData.descriptor,
+      value: recognizedData.value,
+    } as IVoiceCommand);
     setCommandText("");
   }
 

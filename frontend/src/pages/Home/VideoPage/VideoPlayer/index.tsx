@@ -1,7 +1,6 @@
 import cl from "./styles.module.scss";
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import PubSub from "pubsub-js";
-import { IVoicePlayerCommand } from "@/providers/IVoicePlayerCommand";
 import testVideo from "./testVideo.mp4";
 import { ReactComponent as PlayIcon } from "./assets/play.svg";
 import { ReactComponent as PauseIcon } from "./assets/pause.svg";
@@ -15,6 +14,7 @@ import { ReactComponent as AccessibilityIcon } from "./assets/accessibility.svg"
 
 import { Modal, Slider, WithBlur } from "@/components";
 import AccessibilityControls from "./AccessibilityControls";
+import { IVoiceCommand } from "@/providers/IVoiceCommand";
 
 interface VideoPlayerProps {
   source: string;
@@ -60,25 +60,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
     player.current!.pause();
   };
 
-  const handleCommand = (data: IVoicePlayerCommand) => {
-    console.log(data);
-    const command = data.command;
-    switch (command) {
-      case "pausePlay":
-        handlePausePlay();
-        break;
-      case "volume":
-        if (data.value) {
-          if (data.append) appendVolume(data.value);
-          else setVolume(data.value);
-        }
-        break;
-      case "fullscreen":
-        handleFullscreen();
-        break;
-    }
-  };
-
   const appendTime = (time: number) => {
     player.current!.currentTime += time;
   };
@@ -94,6 +75,81 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ source }) => {
       if (newVolume < 0) return 0;
       return newVolume;
     });
+  };
+
+  const appendBrightness = (brightnessAppend: number) => {
+    setBrightness((prev) => {
+      const newBrightness = prev + brightnessAppend;
+      if (newBrightness > 2) return 2;
+      if (newBrightness < 0) return 0;
+      return newBrightness;
+    });
+  };
+
+  const handleCommand = (data: IVoiceCommand) => {
+    console.log(data);
+    const action = data.action;
+    switch (action) {
+      case "pause/play":
+        handlePausePlay();
+        break;
+      case "volume_up":
+      case "volume_down":
+        const volumeMultiplier = action === "volume_up" ? 1 : -1;
+        if (data.descriptor == "на") {
+          appendVolume((data.value! / 100) * volumeMultiplier);
+        } else if (data.descriptor == "до") {
+          setVolume((data.value! / 100) * volumeMultiplier);
+        } else {
+          setVolume(volume > 0.5 ? 0 : 1);
+        }
+        break;
+      case "brightness_up":
+      case "brightness_down":
+        const brightnessMultiplier = action === "brightness_up" ? 1 : -1;
+        if (data.descriptor == "на") {
+          appendBrightness((data.value! / 100) * brightnessMultiplier);
+        } else {
+          setBrightness((data.value! / 100) * brightnessMultiplier);
+        }
+        break;
+      case "contrast_up":
+      case "contrast_down":
+        const contrastMultiplier = action === "contrast_up" ? 1 : -1;
+        if (data.descriptor == "на") {
+          setContrast((prev) => {
+            const newContrast = prev + (data.value! / 100) * contrastMultiplier;
+            if (newContrast > 2) return 2;
+            if (newContrast < 0) return 0;
+            return newContrast;
+          });
+        } else {
+          setContrast((data.value! / 100) * contrastMultiplier);
+        }
+        break;
+      case "saturation_up":
+      case "saturation_down":
+        const saturationMultiplier = action === "saturation_up" ? 1 : -1;
+        if (data.descriptor == "на") {
+          setSaturation((prev) => {
+            const newSaturation =
+              prev + (data.value! / 100) * saturationMultiplier;
+            if (newSaturation > 2) return 2;
+            if (newSaturation < 0) return 0;
+            return newSaturation;
+          });
+        } else {
+          setSaturation((data.value! / 100) * saturationMultiplier);
+        }
+        break;
+      case "skip":
+        if (data.descriptor == "на") {
+          appendTime(data.value!);
+        } else if (data.descriptor == "до") {
+          setTime(data.value!);
+        }
+        break;
+    }
   };
 
   // voice commands
