@@ -1,6 +1,0 @@
-adapter-transformers
-fastapi~=0.95.0
-pydantic~=1.10.7
-uvicorn
-torch~=2.0.0
-requests~=2.28.2

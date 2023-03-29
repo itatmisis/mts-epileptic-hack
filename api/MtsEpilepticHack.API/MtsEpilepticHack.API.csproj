@@ -9,10 +9,12 @@
     <ItemGroup>
         <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.5" />
         <PackageReference Include="AWSSDK.S3" Version="3.7.103.37" />
+        <PackageReference Include="Dapper" Version="2.0.123" />
         <PackageReference Include="Emgu.CV" Version="4.6.0.5131" />
         <PackageReference Include="Emgu.CV.runtime.ubuntu-x64" Version="4.6.0.5131" />
         <PackageReference Include="Emgu.CV.runtime.xamarin.mini.macos" Version="4.6.0.5131" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Npgsql" Version="7.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 

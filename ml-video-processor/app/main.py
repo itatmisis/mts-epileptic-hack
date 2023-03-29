@@ -1,8 +1,27 @@
 import cv2
+import requests
+from moviepy.editor import AudioFileClip, VideoFileClip
+import boto3
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+class Request(BaseModel):
+    input_string: str
+
+
+@app.post("/predict/")
+async def predict(request: Request):
+    response = requests.get('https://7399718814.obj-storage.com/models/pytorch_model.bin')
+    open('input', "wb").write(response.content)
+    s3 = boto3.client('s3')
+    return {"result": sentence}
 
 
 def blur_video(input_path, output_path):
     # загрузка видеофайла
+    audioclip = AudioFileClip(input_path)  # видеофайл 1.mp4
+    audioclip.write_audiofile('out_audio.mp3')
     cap = cv2.VideoCapture(input_path)
 
     # Определяем размеры кадра
@@ -52,9 +71,6 @@ def blur_video(input_path, output_path):
             # Записываем текущий кадр в выходной видеофайл
             out.write(frame)
 
-        # Показываем кадр с отмеченными изменениями
-        cv2.imshow('frame', frame)
-
         # Сохраняем текущий кадр и градации серого для следующей итерации
         prev_frame = frame.copy()
         prev_gray = gray
@@ -63,11 +79,14 @@ def blur_video(input_path, output_path):
         key = cv2.waitKey(1)
         if key == ord('q'):
             break
-
     # Освобождаем ресурсы и закрываем окна
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    # my_clip = VideoFileClip(output_path)
+    # my_clip.write_videofile('aaa.mp4', audio='C:\\Users\\sasha\\PycharmProjects\\mts-epileptic-hack\\out_audio.mp3')
 
-
-blur_video('BigBuckBunny.mp4', 'aaa.mp4')
+    video_clip = VideoFileClip(output_path)
+    # load the audio
+    final_clip = video_clip.set_audio(audioclip)
+    final_clip.write_videofile("final.mp4")
