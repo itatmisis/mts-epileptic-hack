@@ -6,7 +6,7 @@
 ml-video-processor/processor.py - скрипт для блюра участков кадра <br/>
 ml-voice-recognition-api/prediction_model_adapter.py текстовая модель для voice recognition <br/>
 
-Frontend - brach frontend
+Frontend - branch frontend
 
 
 
