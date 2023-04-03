@@ -1,6 +1,6 @@
 # mts-epileptic-hack
 Сервис для просмотра видео для людей с ограниченными возможностями.<br/>
-Демо: http://138.124.180.37/ <br/>
+Демо: https://solving-tree-mts.vercel.app/ <br/>
 Демо api: http://91.185.84.103:8080/swagger/index.html <br/>
 
 ml-video-processor/processor.py - скрипт для блюра участков кадра <br/>
