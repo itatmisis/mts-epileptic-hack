@@ -1,0 +1,72 @@
+$tooltip-min-width: 50px;
+$tooltip-max-width: 150px;
+$arrow-size: 5px;
+$tooltip-bg: rgba(0, 0, 0, 0.6);
+$tooltip-color: var(--text-lightest);
+
+[data-tooltip] {
+  display: flex;
+  position: relative;
+  font-family: "MTSSansRegular";
+  // content
+  &::after {
+    z-index: 100;
+    box-sizing: border-box;
+    position: absolute;
+    flex-basis: 100%;
+    display: block;
+    top: calc(100% + $arrow-size);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $tooltip-bg;
+    min-width: $tooltip-min-width;
+    width: max-content;
+    max-width: $tooltip-max-width;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    content: attr(data-tooltip);
+    text-align: center;
+    padding: 5px;
+    color: $tooltip-color;
+    flex-basis: max-content;
+  }
+  // arrow
+  &::before {
+    opacity: 0;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 $arrow-size $arrow-size $arrow-size;
+    border-color: transparent transparent $tooltip-bg transparent;
+    pointer-events: none;
+  }
+}
+
+@keyframes tooltip {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+[data-tooltip]:hover,
+[data-tooltip]:focus {
+  &::after,
+  &::before {
+    opacity: 1;
+    animation: tooltip 0.2s ease-in-out;
+  }
+}

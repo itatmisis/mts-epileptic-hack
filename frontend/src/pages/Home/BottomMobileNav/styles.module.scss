@@ -1,0 +1,32 @@
+.bottomMobileNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  background-color: var(--bg-secondary);
+  @media screen and (max-width: 800px) {
+    display: flex;
+  }
+  .bottomMobileNav__item {
+    cursor: pointer;
+    padding-block: 12px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-medium);
+    .bottomMobileNav__text {
+      margin-bottom: 2px;
+    }
+    &:hover {
+      color: var(--text-lightest);
+    }
+    &:last-of-type {
+      color: var(--text-lightest);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+}
